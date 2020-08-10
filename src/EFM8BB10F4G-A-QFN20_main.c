@@ -49,7 +49,7 @@ void main(void) {
     unsigned long int uuid;
     char * short_id = 0;
     char buf[2];
-    char * lastEdgeMask = 0;
+    int lastEdgeMask = 0;
     unsigned char xdata
     uuid_bytes[3], *bpos = uuid_bytes;
     char * xdata
@@ -117,9 +117,7 @@ void main(void) {
                     if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedData[4] == uuid_bytes[2]) {
                         short_id = (char *) receivedData[6];
                         uart_buf[0] = 0x80;
-                        uart_buf[1] = 0;
-                        uart_buf[2] = 0;
-                        uart_buf[3] = '\0'; //null term
+                        uart_buf[1] = 0xA0;
                         UART_Send (uart_buf);
                     }
                 }
@@ -127,7 +125,7 @@ void main(void) {
                 //Set edge pin (0x02)
                 if (receivedData[0] == 0x02) {
                     if (receivedData[1] == short_id || receivedData[1] == 0xFF) {
-                        lastEdgeMask = (char *) receivedData[2];
+                        lastEdgeMask = (int *) receivedData[2];
                         if (receivedData[2] & 0x01) {
                             //Turn A on
                             DET_A = 1;
@@ -147,9 +145,7 @@ void main(void) {
                             DET_C = 0;
                         }
                         uart_buf[0] = 0x80;
-                        uart_buf[1] = 0;
-                        uart_buf[2] = 0;
-                        uart_buf[3] = '\0'; //null term
+                        uart_buf[1] = 0xA0;
                         UART_Send (uart_buf);
                     }
                 }
@@ -159,12 +155,12 @@ void main(void) {
                     if (lastEdgeMask == 0) { //Don't read tile if pins were commanded to turn on previously.
                         //If any EDGE pin high, return long id.
                         if (DET_A == 1 || DET_B == 1 || DET_C == 1) {
-                            uart_buf[0] = 0x83;
+                            uart_buf[0] = 0x80;
                             uart_buf[1] = (char *) uuid_bytes[0];
                             uart_buf[2] = (char *) uuid_bytes[1];
                             uart_buf[3] = (char *) uuid_bytes[2];
                             uart_buf[4] = (char *) uuid_bytes[3];
-                            uart_buf[5] = '\0'; //null term
+                            uart_buf[5] = 0xA0; //null term
                             UART_Send (uart_buf);
                         }
                     }
@@ -174,9 +170,7 @@ void main(void) {
                 if (receivedData[0] == 0x08) {
                     if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
                         uart_buf[0] = 0x80;
-                        uart_buf[1] = 0;
-                        uart_buf[2] = 0;
-                        uart_buf[3] = '\0'; //null term
+                        uart_buf[1] = 0xA0;
                         UART_Send (uart_buf);
                         LED_main(receivedData[2], receivedData[3], receivedData[4]);
                     }
@@ -186,9 +180,7 @@ void main(void) {
                 if (receivedData[0] == 0x09) {
                     if (short_id == 0) {
                         uart_buf[0] = 0x80;
-                        uart_buf[1] = 0;
-                        uart_buf[2] = 0;
-                        uart_buf[3] = '\0'; //null term
+                        uart_buf[1] = 0xA0;
                         UART_Send (uart_buf);
                     }
                 }
