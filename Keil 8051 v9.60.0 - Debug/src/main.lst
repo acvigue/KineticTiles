@@ -1,0 +1,270 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 16:48:56 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\src\main.OBJ
+COMPILER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v4\developer\toolchains\keil_8051\9.60\BIN\C51.exe C:\Users\acvig\S
+                    -implicityStudio\v4_workspace\KineticTiles\src\main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE) WARNINGLEVEL(2) FLOATFUZZY
+                    -(3) OPTIMIZE(8,SPEED) INTVECTOR(0X0000) INTPROMOTE INCDIR(C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\inc;
+                    -C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//kits/common/drivers/efm8_retargetserial;C:/SiliconLabs/Si
+                    -mplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/shared/si8051Base;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks
+                    -/8051/v4.1.7//Device/EFM8BB1/inc) PRINT(.\src\main.lst) COND PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\src\main.OBJ)
+
+line level    source
+
+   1          /*
+   2           * RGB Tile v1.4A code.
+   3           * Copyright 2020
+   4           * Written on: Aug 5, 2020
+   5           * By: Aiden Vigue (acvig)
+   6           */
+   7          
+   8          #include <SI_EFM8BB1_Register_Enums.h>
+   9          #include <stdio.h>
+  10          #include <stdlib.h>
+  11          #include "InitDevice.h"
+  12          #include "ws2812.h"
+  13          
+  14          SI_SBIT(DET_C, SFR_P0, 6);
+  15          SI_SBIT(DET_A, SFR_P0, 1);
+  16          SI_SBIT(DET_B, SFR_P1, 5);
+  17          
+  18          void SiLabs_Startup(void) {
+  19   1      
+  20   1      }
+  21          
+  22          char WriteChar(char c) {
+  23   1          SBUF0 = c;
+  24   1          SCON0_TI = 0;
+  25   1          return c;
+  26   1      }
+  27          
+  28          char ReadChar() {
+  29   1          while (!SCON0_RI)
+  30   1              ;
+  31   1          SCON0_RI = 0;
+  32   1          return SBUF0;
+  33   1      }
+  34          
+  35          void UART_Send(char* *s) {
+  36   1          int i;
+  37   1          for (i = 0; i < sizeof(s); i++) {
+  38   2              WriteChar(s[i]);
+*** WARNING C214 IN LINE 38 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: 'Argument': convers
+             -ion: pointer to non-pointer
+  39   2              ReadChar();
+  40   2          }
+  41   1      }
+  42          
+  43          void main(void) {
+  44   1          uint8_t i = 0;
+  45   1          unsigned long int *uuid_p;
+  46   1          unsigned long int uuid;
+  47   1          char * short_id = 0;
+  48   1          char buf[2];
+  49   1          int lastEdgeMask = 0;
+C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 16:48:56 PAGE 2   
+
+  50   1          unsigned char xdata
+  51   1          uuid_bytes[3], *bpos = uuid_bytes;
+  52   1          char * xdata
+  53   1          uart_buf[10];
+  54   1          char * xdata
+  55   1          uuid_str[8], *pos = uuid_str;
+  56   1          uint8_t xdata
+  57   1          receivedData[10] = {'\0'};
+  58   1      
+  59   1          uuid_p = 0xfc;
+*** WARNING C196 IN LINE 59 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably inv
+             -alid
+  60   1          uuid = *uuid_p;
+  61   1      
+  62   1          //call
+  63   1          enter_DefaultMode_from_RESET();
+  64   1      
+  65   1          IE_EA = 1;
+  66   1          XBR2 |= 0x40; //set crossbar regs.
+  67   1      
+  68   1          LED_main(0, 255, 155);
+  69   1      
+  70   1          //Parse chip UUID into long ID (4 bytes)
+  71   1          sprintf(uuid_str, "%lX", uuid);
+*** WARNING C182 IN LINE 71 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: pointer to differen
+             -t objects
+  72   1          buf[0] = *pos;
+  73   1          if (buf[0] == 48) buf[0] = 49;
+  74   1          pos++;
+  75   1          buf[1] = *pos;
+  76   1          pos++;
+  77   1          *bpos = strtol(buf, NULL, 16);
+  78   1          bpos++;
+  79   1          buf[0] = *pos;
+  80   1          if (buf[0] == 48) buf[0] = 49;
+  81   1          pos++;
+  82   1          buf[1] = *pos;
+  83   1          pos++;
+  84   1          *bpos = strtol(buf, NULL, 16);
+  85   1          bpos++;
+  86   1          buf[0] = *pos;
+  87   1          if (buf[0] == 48) buf[0] = 49;
+  88   1          pos++;
+  89   1          buf[1] = *pos;
+  90   1          pos++;
+  91   1          *bpos = strtol(buf, NULL, 16);
+  92   1          bpos++;
+  93   1          buf[0] = *pos;
+  94   1          if (buf[0] < 49) buf[0] = 50;
+  95   1          pos++;
+  96   1          buf[1] = *pos;
+  97   1          pos++;
+  98   1          *bpos = strtol(buf, NULL, 16);
+  99   1      
+ 100   1          //Clear detect pins
+ 101   1          DET_A = 0;
+ 102   1          DET_B = 0;
+ 103   1          DET_C = 0;
+ 104   1          while (1) {
+ 105   2              receivedData[i] = ReadChar();
+ 106   2      
+ 107   2              if (receivedData[i] == '\n') {
+ 108   3      
+C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 16:48:56 PAGE 3   
+
+ 109   3                  //Assign short ID by long ID (0x01)
+ 110   3                  if (receivedData[0] == 0x01) {
+ 111   4                      //Is this tile the intended recipient?
+ 112   4                      if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedData[4
+             -] == uuid_bytes[2]
+ 113   4                              && receivedData[5] == uuid_bytes[3]) {
+ 114   5                          short_id = (char *) receivedData[6];
+ 115   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 115 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 116   5                          uart_buf[1] = 0x01;
+*** WARNING C196 IN LINE 116 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 117   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 117 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 118   5                          UART_Send (uart_buf);
+ 119   5                      }
+ 120   4                  }
+ 121   3      
+ 122   3                  //Set edge pin (0x02)
+ 123   3                  if (receivedData[0] == 0x02) {
+ 124   4                      if (receivedData[1] == short_id || receivedData[1] == 0xFF) {
+ 125   5                          lastEdgeMask = (int *) receivedData[2];
+*** WARNING C260 IN LINE 125 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: '=': pointer trunc
+             -ation
+ 126   5                          if (receivedData[2] & 0x01) {
+ 127   6                              //Turn A on
+ 128   6                              DET_A = 1;
+ 129   6                          } else {
+ 130   6                              DET_A = 0;
+ 131   6                          }
+ 132   5                          if (receivedData[2] & 0x02) {
+ 133   6                              //Turn B on
+ 134   6                              DET_B = 1;
+ 135   6                          } else {
+ 136   6                              DET_B = 0;
+ 137   6                          }
+ 138   5                          if (receivedData[2] & 0x04) {
+ 139   6                              //Turn C on
+ 140   6                              DET_C = 1;
+ 141   6                          } else {
+ 142   6                              DET_C = 0;
+ 143   6                          }
+ 144   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 144 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 145   5                          uart_buf[1] = 0x02;
+*** WARNING C196 IN LINE 145 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 146   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 146 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 147   5                          UART_Send (uart_buf);
+ 148   5                      }
+ 149   4                  }
+ 150   3      
+ 151   3                  //Read long ID if selected by EDGE pin (0x03)
+ 152   3                  if (receivedData[0] == 0x03) {
+ 153   4                      if (lastEdgeMask == 0 && short_id == 0) { //Don't read tile if pins were commanded to turn
+             - on previously.
+ 154   5                      //If any EDGE pin high, return long id.
+ 155   5                          if (DET_A == 1 || DET_B == 1 || DET_C == 1) {
+C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 16:48:56 PAGE 4   
+
+ 156   6                              uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 156 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 157   6                              uart_buf[1] = (char *) uuid_bytes[0];
+ 158   6                              uart_buf[2] = (char *) uuid_bytes[1];
+ 159   6                              uart_buf[3] = (char *) uuid_bytes[2];
+ 160   6                              uart_buf[4] = (char *) uuid_bytes[3];
+ 161   6                              uart_buf[5] = 0xA0; //null term
+*** WARNING C196 IN LINE 161 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 162   6                              UART_Send (uart_buf);
+ 163   6                          }
+ 164   5                      }
+ 165   4                  }
+ 166   3      
+ 167   3                  //Set tile color (0x08)
+ 168   3                  if (receivedData[0] == 0x08) {
+ 169   4                      if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
+ 170   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 170 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 171   5                          uart_buf[1] = 0x08;
+*** WARNING C196 IN LINE 171 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 172   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 172 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 173   5                          LED_main(receivedData[2], receivedData[3], receivedData[4]);
+ 174   5                          UART_Send (uart_buf);
+ 175   5                      }
+ 176   4                  }
+ 177   3      
+ 178   3                  //Call for unconfigured tiles (0x09)
+ 179   3                  if (receivedData[0] == 0x09) {
+ 180   4                      if (short_id == 0) {
+ 181   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 181 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 182   5                          uart_buf[1] = 0x09;
+*** WARNING C196 IN LINE 182 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 183   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 183 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 184   5                          UART_Send (uart_buf);
+ 185   5                      }
+ 186   4                  }
+ 187   3                  i = 0;
+ 188   3              } else {
+ 189   3                  i++;
+ 190   3              }
+ 191   2          }
+ 192   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1091    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----      73
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 16:48:56 PAGE 5   
+
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  18 WARNING(S),  0 ERROR(S)

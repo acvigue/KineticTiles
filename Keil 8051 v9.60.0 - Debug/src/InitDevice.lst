@@ -1,14 +1,15 @@
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/09/2020 17:48:04 PAGE 1   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/10/2020 16:48:56 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE INITDEVICE
 OBJECT MODULE PLACED IN .\src\InitDevice.OBJ
 COMPILER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v4\developer\toolchains\keil_8051\9.60\BIN\C51.exe C:\Users\acvig\S
-                    -implicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\InitDevice.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE) WARNINGLEVEL(
-                    -2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) INTVECTOR(0X0000) INTPROMOTE INCDIR(C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8
-                    -BB10F4G-A-QFN20\inc;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/shared/si8051Base;C:/SiliconLa
-                    -bs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/EFM8BB1/inc) PRINT(.\src\InitDevice.lst) COND PAGEWIDTH(120) P
-                    -AGELENGTH(65) OBJECT(.\src\InitDevice.OBJ)
+                    -implicityStudio\v4_workspace\KineticTiles\src\InitDevice.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE) WARNINGLEVEL(2) FLOA
+                    -TFUZZY(3) OPTIMIZE(8,SPEED) INTVECTOR(0X0000) INTPROMOTE INCDIR(C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTile
+                    -s\inc;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//kits/common/drivers/efm8_retargetserial;C:/SiliconL
+                    -abs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/shared/si8051Base;C:/SiliconLabs/SimplicityStudio/v4/develope
+                    -r/sdks/8051/v4.1.7//Device/EFM8BB1/inc) PRINT(.\src\InitDevice.lst) COND PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\src\Init
+                    -Device.OBJ)
 
 line level    source
 
@@ -40,7 +41,7 @@ line level    source
   26   1          PORTS_1_enter_DefaultMode_from_RESET();
   27   1          PBCFG_0_enter_DefaultMode_from_RESET();
   28   1          CLOCK_0_enter_DefaultMode_from_RESET();
-  29   1          TIMER16_2_enter_DefaultMode_from_RESET();
+  29   1          TIMER01_0_enter_DefaultMode_from_RESET();
   30   1          TIMER_SETUP_0_enter_DefaultMode_from_RESET();
   31   1          UART_0_enter_DefaultMode_from_RESET();
   32   1          INTERRUPT_0_enter_DefaultMode_from_RESET();
@@ -62,9 +63,9 @@ line level    source
   48   1           - P0.5 output is open-drain
   49   1           - P0.6 output is open-drain
   50   1           - P0.7 output is open-drain
-  51   1           ***********************************************************************/
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/09/2020 17:48:04 PAGE 2   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/10/2020 16:48:56 PAGE 2   
 
+  51   1           ***********************************************************************/
   52   1          P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_
              -DRAIN | P0MDOUT_B4__PUSH_PULL | P0MDOUT_B5__OPEN_DRAIN
   53   1                  | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
@@ -119,216 +120,191 @@ line level    source
  101          
  102          extern void PBCFG_0_enter_DefaultMode_from_RESET(void) {
  103   1          // $[XBR2 - Port I/O Crossbar 2]
- 104   1          /***********************************************************************
- 105   1           - Weak Pullups enabled 
- 106   1           - Crossbar enabled
- 107   1           ***********************************************************************/
- 108   1          XBR2 = XBR2_WEAKPUD__PULL_UPS_ENABLED | XBR2_XBARE__ENABLED;
- 109   1          // [XBR2 - Port I/O Crossbar 2]$
- 110   1      
- 111   1          // $[PRTDRV - Port Drive Strength]
- 112   1          // [PRTDRV - Port Drive Strength]$
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/09/2020 17:48:04 PAGE 3   
+ 104   1          // [XBR2 - Port I/O Crossbar 2]$
+ 105   1      
+ 106   1          // $[PRTDRV - Port Drive Strength]
+ 107   1          // [PRTDRV - Port Drive Strength]$
+ 108   1      
+ 109   1          // $[XBR0 - Port I/O Crossbar 0]
+ 110   1          /***********************************************************************
+ 111   1           - UART TX, RX routed to Port pins P0.4 and P0.5
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/10/2020 16:48:56 PAGE 3   
 
- 113   1      
- 114   1          // $[XBR0 - Port I/O Crossbar 0]
- 115   1          /***********************************************************************
- 116   1           - UART TX, RX routed to Port pins P0.4 and P0.5
- 117   1           - SPI I/O unavailable at Port pins
- 118   1           - SMBus 0 I/O unavailable at Port pins
- 119   1           - CP0 unavailable at Port pin
- 120   1           - Asynchronous CP0 unavailable at Port pin
- 121   1           - CP1 unavailable at Port pin
- 122   1           - Asynchronous CP1 unavailable at Port pin
- 123   1           - SYSCLK unavailable at Port pin
- 124   1           ***********************************************************************/
- 125   1          XBR0 = XBR0_URT0E__ENABLED | XBR0_SPI0E__DISABLED | XBR0_SMB0E__DISABLED | XBR0_CP0E__DISABLED | XBR0_
+ 112   1           - SPI I/O unavailable at Port pins
+ 113   1           - SMBus 0 I/O unavailable at Port pins
+ 114   1           - CP0 unavailable at Port pin
+ 115   1           - Asynchronous CP0 unavailable at Port pin
+ 116   1           - CP1 unavailable at Port pin
+ 117   1           - Asynchronous CP1 unavailable at Port pin
+ 118   1           - SYSCLK unavailable at Port pin
+ 119   1           ***********************************************************************/
+ 120   1          XBR0 = XBR0_URT0E__ENABLED | XBR0_SPI0E__DISABLED | XBR0_SMB0E__DISABLED | XBR0_CP0E__DISABLED | XBR0_
              -CP0AE__DISABLED | XBR0_CP1E__DISABLED
- 126   1                  | XBR0_CP1AE__DISABLED | XBR0_SYSCKE__DISABLED;
- 127   1          // [XBR0 - Port I/O Crossbar 0]$
- 128   1      
- 129   1          // $[XBR1 - Port I/O Crossbar 1]
- 130   1          // [XBR1 - Port I/O Crossbar 1]$
- 131   1      
- 132   1      }
- 133          
- 134          extern void WDT_0_enter_DefaultMode_from_RESET(void) {
- 135   1          // $[Watchdog Timer Init Variable Declarations]
- 136   1          uint32_t i;
- 137   1          bool ea;
- 138   1          // [Watchdog Timer Init Variable Declarations]$
+ 121   1                  | XBR0_CP1AE__DISABLED | XBR0_SYSCKE__DISABLED;
+ 122   1          // [XBR0 - Port I/O Crossbar 0]$
+ 123   1      
+ 124   1          // $[XBR1 - Port I/O Crossbar 1]
+ 125   1          // [XBR1 - Port I/O Crossbar 1]$
+ 126   1      
+ 127   1      }
+ 128          
+ 129          extern void WDT_0_enter_DefaultMode_from_RESET(void) {
+ 130   1      
+ 131   1          // $[Watchdog Timer Init Variable Declarations]
+ 132   1          uint32_t i;
+ 133   1          bool ea;
+ 134   1          // [Watchdog Timer Init Variable Declarations]$
+ 135   1      
+ 136   1          // $[WDTCN - Watchdog Timer Control]
+ 137   1          // Deprecated
+ 138   1          // [WDTCN - Watchdog Timer Control]$
  139   1      
- 140   1          // $[WDTCN - Watchdog Timer Control]
- 141   1          // Deprecated
- 142   1          // [WDTCN - Watchdog Timer Control]$
- 143   1      
- 144   1          // $[WDTCN_2 - Watchdog Timer Control]
- 145   1      
- 146   1          // Feed WDT timer before disabling (Erratum WDT_E102)
- 147   1          WDTCN = 0xA5;
- 148   1      
- 149   1          // Add 2 LFO cycle delay before disabling WDT (Erratum WDT_E102)
- 150   1          for (i = 0; i < (2 * 3062500UL) / (10000 * 3); i++) {
- 151   2              NOP();
- 152   2          }
- 153   1      
- 154   1          // Disable WDT
- 155   1          ea = IE_EA;
- 156   1          IE_EA = 0;
- 157   1          WDTCN = 0xDE;
- 158   1          WDTCN = 0xAD;
- 159   1          IE_EA = ea;
- 160   1      
- 161   1          // [WDTCN_2 - Watchdog Timer Control]$
+ 140   1          // $[WDTCN_2 - Watchdog Timer Control]
+ 141   1      
+ 142   1          // Feed WDT timer before disabling (Erratum WDT_E102)
+ 143   1          WDTCN = 0xA5;
+ 144   1      
+ 145   1          // Add 2 LFO cycle delay before disabling WDT (Erratum WDT_E102)
+ 146   1          for (i = 0; i < (2 * 3062500UL) / (10000 * 3); i++) {
+ 147   2              NOP();
+ 148   2          }
+ 149   1      
+ 150   1          // Disable WDT
+ 151   1          ea = IE_EA;
+ 152   1          IE_EA = 0;
+ 153   1          WDTCN = 0xDE;
+ 154   1          WDTCN = 0xAD;
+ 155   1          IE_EA = ea;
+ 156   1      
+ 157   1          // [WDTCN_2 - Watchdog Timer Control]$
+ 158   1      
+ 159   1      }
+ 160          
+ 161          extern void CLOCK_0_enter_DefaultMode_from_RESET(void) {
  162   1      
- 163   1      }
- 164          
- 165          extern void CLOCK_0_enter_DefaultMode_from_RESET(void) {
- 166   1          // $[CLKSEL - Clock Select]
- 167   1          /***********************************************************************
- 168   1           - Clock derived from the Internal High-Frequency Oscillator
- 169   1           - SYSCLK is equal to selected clock source divided by 1
- 170   1           ***********************************************************************/
- 171   1          CLKSEL = CLKSEL_CLKSL__HFOSC | CLKSEL_CLKDIV__SYSCLK_DIV_1;
- 172   1          // [CLKSEL - Clock Select]$
- 173   1      
- 174   1      }
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/09/2020 17:48:04 PAGE 4   
+ 163   1          // $[CLKSEL - Clock Select]
+ 164   1          /***********************************************************************
+ 165   1           - Clock derived from the Internal High-Frequency Oscillator
+ 166   1           - SYSCLK is equal to selected clock source divided by 1
+ 167   1           ***********************************************************************/
+ 168   1          CLKSEL = CLKSEL_CLKSL__HFOSC | CLKSEL_CLKDIV__SYSCLK_DIV_1;
+ 169   1          // [CLKSEL - Clock Select]$
+ 170   1      
+ 171   1      }
+ 172          
+ 173          extern void TIMER16_2_enter_DefaultMode_from_RESET(void) {
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/10/2020 16:48:56 PAGE 4   
 
- 175          
- 176          extern void TIMER16_2_enter_DefaultMode_from_RESET(void) {
- 177   1          // $[Timer Initialization]
- 178   1          // Save Timer Configuration
- 179   1          uint8_t TMR2CN0_TR2_save;
- 180   1          TMR2CN0_TR2_save = TMR2CN0 & TMR2CN0_TR2__BMASK;
- 181   1          // Stop Timer
- 182   1          TMR2CN0 &= ~(TMR2CN0_TR2__BMASK);
- 183   1          // [Timer Initialization]$
- 184   1      
- 185   1          // $[TMR2CN0 - Timer 2 Control]
- 186   1          // [TMR2CN0 - Timer 2 Control]$
- 187   1      
- 188   1          // $[TMR2H - Timer 2 High Byte]
- 189   1          /***********************************************************************
- 190   1           - Timer 2 High Byte = 0xFF
- 191   1           ***********************************************************************/
- 192   1          TMR2H = (0xFF << TMR2H_TMR2H__SHIFT);
- 193   1          // [TMR2H - Timer 2 High Byte]$
- 194   1      
- 195   1          // $[TMR2L - Timer 2 Low Byte]
- 196   1          /***********************************************************************
- 197   1           - Timer 2 Low Byte = 0xFE
- 198   1           ***********************************************************************/
- 199   1          TMR2L = (0xFE << TMR2L_TMR2L__SHIFT);
- 200   1          // [TMR2L - Timer 2 Low Byte]$
- 201   1      
- 202   1          // $[TMR2RLH - Timer 2 Reload High Byte]
- 203   1          /***********************************************************************
- 204   1           - Timer 2 Reload High Byte = 0xFF
- 205   1           ***********************************************************************/
- 206   1          TMR2RLH = (0xFF << TMR2RLH_TMR2RLH__SHIFT);
- 207   1          // [TMR2RLH - Timer 2 Reload High Byte]$
- 208   1      
- 209   1          // $[TMR2RLL - Timer 2 Reload Low Byte]
- 210   1          /***********************************************************************
- 211   1           - Timer 2 Reload Low Byte = 0xFF
- 212   1           ***********************************************************************/
- 213   1          TMR2RLL = (0xFF << TMR2RLL_TMR2RLL__SHIFT);
- 214   1          // [TMR2RLL - Timer 2 Reload Low Byte]$
- 215   1      
- 216   1          // $[TMR2CN0]
- 217   1          // [TMR2CN0]$
- 218   1      
- 219   1          // $[Timer Restoration]
- 220   1          // Restore Timer Configuration
- 221   1          TMR2CN0 |= TMR2CN0_TR2_save;
- 222   1          // [Timer Restoration]$
- 223   1      
- 224   1      }
- 225          
- 226          extern void TIMER_SETUP_0_enter_DefaultMode_from_RESET(void) {
- 227   1          // $[CKCON0 - Clock Control 0]
- 228   1          /***********************************************************************
- 229   1           - System clock divided by 4
- 230   1           - Counter/Timer 0 uses the system clock
- 231   1           - Timer 2 high byte uses the system clock
- 232   1           - Timer 2 low byte uses the system clock
- 233   1           - Timer 3 high byte uses the clock defined by T3XCLK in TMR3CN0
- 234   1           - Timer 3 low byte uses the clock defined by T3XCLK in TMR3CN0
- 235   1           - Timer 1 uses the system clock
- 236   1           ***********************************************************************/
- 237   1          CKCON0 = CKCON0_SCA__SYSCLK_DIV_4 | CKCON0_T0M__SYSCLK | CKCON0_T2MH__SYSCLK | CKCON0_T2ML__SYSCLK | C
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/09/2020 17:48:04 PAGE 5   
-
-             -KCON0_T3MH__EXTERNAL_CLOCK
- 238   1                  | CKCON0_T3ML__EXTERNAL_CLOCK | CKCON0_T1M__SYSCLK;
- 239   1          // [CKCON0 - Clock Control 0]$
- 240   1      
- 241   1          // $[TMOD - Timer 0/1 Mode]
- 242   1          /***********************************************************************
- 243   1           - Mode 0, 13-bit Counter/Timer
- 244   1           - Mode 2, 8-bit Counter/Timer with Auto-Reload
- 245   1           - Timer Mode
- 246   1           - Timer 0 enabled when TR0 = 1 irrespective of INT0 logic level
- 247   1           - Timer Mode
- 248   1           - Timer 1 enabled when TR1 = 1 irrespective of INT1 logic level
- 249   1           ***********************************************************************/
- 250   1          TMOD = TMOD_T0M__MODE0 | TMOD_T1M__MODE2 | TMOD_CT0__TIMER | TMOD_GATE0__DISABLED | TMOD_CT1__TIMER | 
+ 174   1      
+ 175   1      }
+ 176          
+ 177          extern void TIMER_SETUP_0_enter_DefaultMode_from_RESET(void) {
+ 178   1      
+ 179   1          // $[CKCON0 - Clock Control 0]
+ 180   1          /***********************************************************************
+ 181   1           - System clock divided by 12
+ 182   1           - Counter/Timer 0 uses the clock defined by the prescale field, SCA
+ 183   1           - Timer 2 high byte uses the clock defined by T2XCLK in TMR2CN0
+ 184   1           - Timer 2 low byte uses the clock defined by T2XCLK in TMR2CN0
+ 185   1           - Timer 3 high byte uses the clock defined by T3XCLK in TMR3CN0
+ 186   1           - Timer 3 low byte uses the clock defined by T3XCLK in TMR3CN0
+ 187   1           - Timer 1 uses the system clock
+ 188   1           ***********************************************************************/
+ 189   1          CKCON0 = CKCON0_SCA__SYSCLK_DIV_12 | CKCON0_T0M__PRESCALE | CKCON0_T2MH__EXTERNAL_CLOCK | CKCON0_T2ML_
+             -_EXTERNAL_CLOCK | CKCON0_T3MH__EXTERNAL_CLOCK
+ 190   1                  | CKCON0_T3ML__EXTERNAL_CLOCK | CKCON0_T1M__SYSCLK;
+ 191   1          // [CKCON0 - Clock Control 0]$
+ 192   1      
+ 193   1          // $[TMOD - Timer 0/1 Mode]
+ 194   1          /***********************************************************************
+ 195   1           - Mode 0, 13-bit Counter/Timer
+ 196   1           - Mode 2, 8-bit Counter/Timer with Auto-Reload
+ 197   1           - Timer Mode
+ 198   1           - Timer 0 enabled when TR0 = 1 irrespective of INT0 logic level
+ 199   1           - Timer Mode
+ 200   1           - Timer 1 enabled when TR1 = 1 irrespective of INT1 logic level
+ 201   1           ***********************************************************************/
+ 202   1          TMOD = TMOD_T0M__MODE0 | TMOD_T1M__MODE2 | TMOD_CT0__TIMER | TMOD_GATE0__DISABLED | TMOD_CT1__TIMER | 
              -TMOD_GATE1__DISABLED;
- 251   1          // [TMOD - Timer 0/1 Mode]$
- 252   1      
- 253   1          // $[TCON - Timer 0/1 Control]
- 254   1          /***********************************************************************
- 255   1           - Start Timer 1 running
- 256   1           ***********************************************************************/
- 257   1          TCON |= TCON_TR1__RUN;
- 258   1          // [TCON - Timer 0/1 Control]$
- 259   1      
- 260   1      }
- 261          
- 262          extern void INTERRUPT_0_enter_DefaultMode_from_RESET(void) {
- 263   1          // $[EIE1 - Extended Interrupt Enable 1]
- 264   1          // [EIE1 - Extended Interrupt Enable 1]$
- 265   1      
- 266   1          // $[EIP1 - Extended Interrupt Priority 1]
- 267   1          // [EIP1 - Extended Interrupt Priority 1]$
- 268   1      
- 269   1          // $[IE - Interrupt Enable]
- 270   1          /***********************************************************************
- 271   1           - Enable each interrupt according to its individual mask setting
- 272   1           - Disable external interrupt 0
- 273   1           - Disable external interrupt 1
- 274   1           - Disable all SPI0 interrupts
- 275   1           - Disable all Timer 0 interrupt
- 276   1           - Disable all Timer 1 interrupt
- 277   1           - Disable Timer 2 interrupt
- 278   1           - Enable UART0 interrupt
- 279   1           ***********************************************************************/
- 280   1          IE = IE_EA__ENABLED | IE_EX0__DISABLED | IE_EX1__DISABLED | IE_ESPI0__DISABLED | IE_ET0__DISABLED | IE
-             -_ET1__DISABLED | IE_ET2__DISABLED | IE_ES0__ENABLED;
- 281   1          // [IE - Interrupt Enable]$
- 282   1      
- 283   1          // $[IP - Interrupt Priority]
- 284   1          // [IP - Interrupt Priority]$
- 285   1      
- 286   1      }
- 287          
- 288          extern void UART_0_enter_DefaultMode_from_RESET(void) {
- 289   1          // $[SCON0 - UART0 Serial Port Control]
- 290   1          /***********************************************************************
- 291   1           - UART0 reception enabled
- 292   1           ***********************************************************************/
- 293   1          SCON0 |= SCON0_REN__RECEIVE_ENABLED;
- 294   1          // [SCON0 - UART0 Serial Port Control]$
- 295   1      
- 296   1      }
- 297          
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/09/2020 17:48:04 PAGE 6   
+ 203   1          // [TMOD - Timer 0/1 Mode]$
+ 204   1      
+ 205   1          // $[TCON - Timer 0/1 Control]
+ 206   1          /***********************************************************************
+ 207   1           - Start Timer 1 running
+ 208   1           ***********************************************************************/
+ 209   1          TCON |= TCON_TR1__RUN;
+ 210   1          // [TCON - Timer 0/1 Control]$
+ 211   1      
+ 212   1      }
+ 213          
+ 214          extern void INTERRUPT_0_enter_DefaultMode_from_RESET(void) {
+ 215   1      
+ 216   1          // $[EIE1 - Extended Interrupt Enable 1]
+ 217   1          // [EIE1 - Extended Interrupt Enable 1]$
+ 218   1      
+ 219   1          // $[EIP1 - Extended Interrupt Priority 1]
+ 220   1          // [EIP1 - Extended Interrupt Priority 1]$
+ 221   1      
+ 222   1          // $[IE - Interrupt Enable]
+ 223   1          // [IE - Interrupt Enable]$
+ 224   1      
+ 225   1          // $[IP - Interrupt Priority]
+ 226   1          // [IP - Interrupt Priority]$
+ 227   1      
+ 228   1      }
+ 229          
+ 230          extern void UART_0_enter_DefaultMode_from_RESET(void) {
+ 231   1      
+ 232   1          // $[SCON0 - UART0 Serial Port Control]
+ 233   1          /***********************************************************************
+ 234   1           - UART0 reception enabled
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/10/2020 16:48:56 PAGE 5   
 
+ 235   1           ***********************************************************************/
+ 236   1          SCON0 |= SCON0_REN__RECEIVE_ENABLED;
+ 237   1          // [SCON0 - UART0 Serial Port Control]$
+ 238   1      
+ 239   1      }
+ 240          
+ 241          extern void TIMER01_0_enter_DefaultMode_from_RESET(void) {
+ 242   1      
+ 243   1          // $[Timer Initialization]
+ 244   1          //Save Timer Configuration
+ 245   1          uint8_t TCON_save;
+ 246   1          TCON_save = TCON;
+ 247   1          //Stop Timers
+ 248   1          TCON &= ~TCON_TR0__BMASK & ~TCON_TR1__BMASK;
+ 249   1      
+ 250   1          // [Timer Initialization]$
+ 251   1      
+ 252   1          // $[TH0 - Timer 0 High Byte]
+ 253   1          // [TH0 - Timer 0 High Byte]$
+ 254   1      
+ 255   1          // $[TL0 - Timer 0 Low Byte]
+ 256   1          // [TL0 - Timer 0 Low Byte]$
+ 257   1      
+ 258   1          // $[TH1 - Timer 1 High Byte]
+ 259   1          /***********************************************************************
+ 260   1           - Timer 1 High Byte = 0x96
+ 261   1           ***********************************************************************/
+ 262   1          TH1 = (0x96 << TH1_TH1__SHIFT);
+ 263   1          // [TH1 - Timer 1 High Byte]$
+ 264   1      
+ 265   1          // $[TL1 - Timer 1 Low Byte]
+ 266   1          // [TL1 - Timer 1 Low Byte]$
+ 267   1      
+ 268   1          // $[Timer Restoration]
+ 269   1          //Restore Timer Configuration
+ 270   1          TCON |= (TCON_save & TCON_TR0__BMASK) | (TCON_save & TCON_TR1__BMASK);
+ 271   1      
+ 272   1          // [Timer Restoration]$
+ 273   1      
+ 274   1      }
+ 275          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    159    ----
+   CODE SIZE        =    151    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

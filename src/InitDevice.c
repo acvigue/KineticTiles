@@ -26,7 +26,7 @@ extern void enter_DefaultMode_from_RESET(void) {
     PORTS_1_enter_DefaultMode_from_RESET();
     PBCFG_0_enter_DefaultMode_from_RESET();
     CLOCK_0_enter_DefaultMode_from_RESET();
-    TIMER16_2_enter_DefaultMode_from_RESET();
+    TIMER01_0_enter_DefaultMode_from_RESET();
     TIMER_SETUP_0_enter_DefaultMode_from_RESET();
     UART_0_enter_DefaultMode_from_RESET();
     INTERRUPT_0_enter_DefaultMode_from_RESET();
@@ -101,11 +101,6 @@ extern void PORTS_1_enter_DefaultMode_from_RESET(void) {
 
 extern void PBCFG_0_enter_DefaultMode_from_RESET(void) {
     // $[XBR2 - Port I/O Crossbar 2]
-    /***********************************************************************
-     - Weak Pullups enabled 
-     - Crossbar enabled
-     ***********************************************************************/
-    XBR2 = XBR2_WEAKPUD__PULL_UPS_ENABLED | XBR2_XBARE__ENABLED;
     // [XBR2 - Port I/O Crossbar 2]$
 
     // $[PRTDRV - Port Drive Strength]
@@ -132,6 +127,7 @@ extern void PBCFG_0_enter_DefaultMode_from_RESET(void) {
 }
 
 extern void WDT_0_enter_DefaultMode_from_RESET(void) {
+
     // $[Watchdog Timer Init Variable Declarations]
     uint32_t i;
     bool ea;
@@ -163,6 +159,7 @@ extern void WDT_0_enter_DefaultMode_from_RESET(void) {
 }
 
 extern void CLOCK_0_enter_DefaultMode_from_RESET(void) {
+
     // $[CLKSEL - Clock Select]
     /***********************************************************************
      - Clock derived from the Internal High-Frequency Oscillator
@@ -174,67 +171,22 @@ extern void CLOCK_0_enter_DefaultMode_from_RESET(void) {
 }
 
 extern void TIMER16_2_enter_DefaultMode_from_RESET(void) {
-    // $[Timer Initialization]
-    // Save Timer Configuration
-    uint8_t TMR2CN0_TR2_save;
-    TMR2CN0_TR2_save = TMR2CN0 & TMR2CN0_TR2__BMASK;
-    // Stop Timer
-    TMR2CN0 &= ~(TMR2CN0_TR2__BMASK);
-    // [Timer Initialization]$
-
-    // $[TMR2CN0 - Timer 2 Control]
-    // [TMR2CN0 - Timer 2 Control]$
-
-    // $[TMR2H - Timer 2 High Byte]
-    /***********************************************************************
-     - Timer 2 High Byte = 0xFF
-     ***********************************************************************/
-    TMR2H = (0xFF << TMR2H_TMR2H__SHIFT);
-    // [TMR2H - Timer 2 High Byte]$
-
-    // $[TMR2L - Timer 2 Low Byte]
-    /***********************************************************************
-     - Timer 2 Low Byte = 0xFE
-     ***********************************************************************/
-    TMR2L = (0xFE << TMR2L_TMR2L__SHIFT);
-    // [TMR2L - Timer 2 Low Byte]$
-
-    // $[TMR2RLH - Timer 2 Reload High Byte]
-    /***********************************************************************
-     - Timer 2 Reload High Byte = 0xFF
-     ***********************************************************************/
-    TMR2RLH = (0xFF << TMR2RLH_TMR2RLH__SHIFT);
-    // [TMR2RLH - Timer 2 Reload High Byte]$
-
-    // $[TMR2RLL - Timer 2 Reload Low Byte]
-    /***********************************************************************
-     - Timer 2 Reload Low Byte = 0xFF
-     ***********************************************************************/
-    TMR2RLL = (0xFF << TMR2RLL_TMR2RLL__SHIFT);
-    // [TMR2RLL - Timer 2 Reload Low Byte]$
-
-    // $[TMR2CN0]
-    // [TMR2CN0]$
-
-    // $[Timer Restoration]
-    // Restore Timer Configuration
-    TMR2CN0 |= TMR2CN0_TR2_save;
-    // [Timer Restoration]$
 
 }
 
 extern void TIMER_SETUP_0_enter_DefaultMode_from_RESET(void) {
+
     // $[CKCON0 - Clock Control 0]
     /***********************************************************************
-     - System clock divided by 4
-     - Counter/Timer 0 uses the system clock
-     - Timer 2 high byte uses the system clock
-     - Timer 2 low byte uses the system clock
+     - System clock divided by 12
+     - Counter/Timer 0 uses the clock defined by the prescale field, SCA
+     - Timer 2 high byte uses the clock defined by T2XCLK in TMR2CN0
+     - Timer 2 low byte uses the clock defined by T2XCLK in TMR2CN0
      - Timer 3 high byte uses the clock defined by T3XCLK in TMR3CN0
      - Timer 3 low byte uses the clock defined by T3XCLK in TMR3CN0
      - Timer 1 uses the system clock
      ***********************************************************************/
-    CKCON0 = CKCON0_SCA__SYSCLK_DIV_4 | CKCON0_T0M__SYSCLK | CKCON0_T2MH__SYSCLK | CKCON0_T2ML__SYSCLK | CKCON0_T3MH__EXTERNAL_CLOCK
+    CKCON0 = CKCON0_SCA__SYSCLK_DIV_12 | CKCON0_T0M__PRESCALE | CKCON0_T2MH__EXTERNAL_CLOCK | CKCON0_T2ML__EXTERNAL_CLOCK | CKCON0_T3MH__EXTERNAL_CLOCK
             | CKCON0_T3ML__EXTERNAL_CLOCK | CKCON0_T1M__SYSCLK;
     // [CKCON0 - Clock Control 0]$
 
@@ -260,6 +212,7 @@ extern void TIMER_SETUP_0_enter_DefaultMode_from_RESET(void) {
 }
 
 extern void INTERRUPT_0_enter_DefaultMode_from_RESET(void) {
+
     // $[EIE1 - Extended Interrupt Enable 1]
     // [EIE1 - Extended Interrupt Enable 1]$
 
@@ -267,17 +220,6 @@ extern void INTERRUPT_0_enter_DefaultMode_from_RESET(void) {
     // [EIP1 - Extended Interrupt Priority 1]$
 
     // $[IE - Interrupt Enable]
-    /***********************************************************************
-     - Enable each interrupt according to its individual mask setting
-     - Disable external interrupt 0
-     - Disable external interrupt 1
-     - Disable all SPI0 interrupts
-     - Disable all Timer 0 interrupt
-     - Disable all Timer 1 interrupt
-     - Disable Timer 2 interrupt
-     - Enable UART0 interrupt
-     ***********************************************************************/
-    IE = IE_EA__ENABLED | IE_EX0__DISABLED | IE_EX1__DISABLED | IE_ESPI0__DISABLED | IE_ET0__DISABLED | IE_ET1__DISABLED | IE_ET2__DISABLED | IE_ES0__ENABLED;
     // [IE - Interrupt Enable]$
 
     // $[IP - Interrupt Priority]
@@ -286,12 +228,48 @@ extern void INTERRUPT_0_enter_DefaultMode_from_RESET(void) {
 }
 
 extern void UART_0_enter_DefaultMode_from_RESET(void) {
+
     // $[SCON0 - UART0 Serial Port Control]
     /***********************************************************************
      - UART0 reception enabled
      ***********************************************************************/
     SCON0 |= SCON0_REN__RECEIVE_ENABLED;
     // [SCON0 - UART0 Serial Port Control]$
+
+}
+
+extern void TIMER01_0_enter_DefaultMode_from_RESET(void) {
+
+    // $[Timer Initialization]
+    //Save Timer Configuration
+    uint8_t TCON_save;
+    TCON_save = TCON;
+    //Stop Timers
+    TCON &= ~TCON_TR0__BMASK & ~TCON_TR1__BMASK;
+
+    // [Timer Initialization]$
+
+    // $[TH0 - Timer 0 High Byte]
+    // [TH0 - Timer 0 High Byte]$
+
+    // $[TL0 - Timer 0 Low Byte]
+    // [TL0 - Timer 0 Low Byte]$
+
+    // $[TH1 - Timer 1 High Byte]
+    /***********************************************************************
+     - Timer 1 High Byte = 0x96
+     ***********************************************************************/
+    TH1 = (0x96 << TH1_TH1__SHIFT);
+    // [TH1 - Timer 1 High Byte]$
+
+    // $[TL1 - Timer 1 Low Byte]
+    // [TL1 - Timer 1 Low Byte]$
+
+    // $[Timer Restoration]
+    //Restore Timer Configuration
+    TCON |= (TCON_save & TCON_TR0__BMASK) | (TCON_save & TCON_TR1__BMASK);
+
+    // [Timer Restoration]$
 
 }
 

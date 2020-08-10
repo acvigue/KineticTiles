@@ -1,14 +1,15 @@
-C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/09/2020 22:39:19 PAGE 1   
+C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/10/2020 15:40:21 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE EFM8BB10F4G_A_QFN20_MAIN
 OBJECT MODULE PLACED IN .\src\EFM8BB10F4G-A-QFN20_main.OBJ
 COMPILER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v4\developer\toolchains\keil_8051\9.60\BIN\C51.exe C:\Users\acvig\S
-                    -implicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20_main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE)
-                    - WARNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) INTVECTOR(0X0000) INTPROMOTE INCDIR(C:\Users\acvig\SimplicityStudio\v4_
-                    -workspace\EFM8BB10F4G-A-QFN20\inc;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/shared/si8051Bas
-                    -e;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/EFM8BB1/inc) PRINT(.\src\EFM8BB10F4G-A-QFN20_mai
-                    -n.lst) COND PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\src\EFM8BB10F4G-A-QFN20_main.OBJ)
+                    -implicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE) WARNIN
+                    -GLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) INTVECTOR(0X0000) INTPROMOTE INCDIR(C:\Users\acvig\SimplicityStudio\v4_workspa
+                    -ce\KineticTiles\inc;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//kits/common/drivers/efm8_retargetseri
+                    -al;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/shared/si8051Base;C:/SiliconLabs/SimplicityStud
+                    -io/v4/developer/sdks/8051/v4.1.7//Device/EFM8BB1/inc) PRINT(.\src\EFM8BB10F4G-A-QFN20_main.lst) COND PAGEWIDTH(120) PAGE
+                    -LENGTH(65) OBJECT(.\src\EFM8BB10F4G-A-QFN20_main.OBJ)
 
 line level    source
 
@@ -19,250 +20,257 @@ line level    source
    5           * By: Aiden Vigue (acvig)
    6           */
    7          
-   8          //-----------------------------------------------------------------------------
-   9          // Includes
-  10          //-----------------------------------------------------------------------------
-  11          #include <SI_EFM8BB1_Register_Enums.h>                  // SFR declarations
-  12          #include <stdio.h>
-  13          #include <stdlib.h>
-  14          #define F_CPU   24500000
-  15          #include "InitDevice.h"
-  16          #include "ws2812.h"
-  17          #include "uart.h"
-*** WARNING C235 IN LINE 207 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\uart.h: parameter 1
-             -: different types
-*** WARNING C260 IN LINE 247 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\uart.h: '=': pointe
-             -r truncation
-*** WARNING C182 IN LINE 265 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\uart.h: pointer to 
-             -different objects
-  18          
-  19          // $[Generated Includes]
-  20          // [Generated Includes]$
-  21          
-  22          #define BAUD_RATE                       19200
-  23          #define RECEIVED_DATA_ARRAY_SIZE        10 // size of array where to store the incoming data
-  24          
-  25          SI_SBIT(DET_C, SFR_P0, 6);
-  26          SI_SBIT(DET_A, SFR_P0, 1);
-  27          SI_SBIT(DET_B, SFR_P1, 5);
-  28          
-  29          //-----------------------------------------------------------------------------
-  30          // SiLabs_Startup() Routine
-  31          // ----------------------------------------------------------------------------
-  32          // This function is called immediately after reset, before the initialization
-  33          // code is run in SILABS_STARTUP.A51 (which runs before main() ). This is a
-  34          // useful place to disable the watchdog timer, which is enable by default
-  35          // and may trigger before main() in some instances.
-  36          //-----------------------------------------------------------------------------
-  37          void SiLabs_Startup(void) {
-  38   1          // $[SiLabs Startup]
-  39   1          // [SiLabs Startup]$
-  40   1      }
-  41          
-  42          //-----------------------------------------------------------------------------
-  43          // main() Routine
-  44          // ----------------------------------------------------------------------------
-  45          void main(void) {
-C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/09/2020 22:39:19 PAGE 2   
+   8          #include <SI_EFM8BB1_Register_Enums.h>
+   9          #include <stdio.h>
+  10          #include <stdlib.h>
+  11          #include "InitDevice.h"
+  12          #include "ws2812.h"
+  13          
+  14          SI_SBIT(DET_C, SFR_P0, 6);
+  15          SI_SBIT(DET_A, SFR_P0, 1);
+  16          SI_SBIT(DET_B, SFR_P1, 5);
+  17          
+  18          void SiLabs_Startup(void) {
+  19   1          WDTCN = 0xDE; // First key
+  20   1          WDTCN = 0xAD; // Second key
+  21   1      }
+  22          
+  23          char ReadChar() {
+  24   1          char c;
+  25   1          c = SBUF0;
+  26   1          SCON0_RI = 0;
+  27   1          return (c);
+  28   1      }
+  29          
+  30          char WriteChar(char c) {
+  31   1          return (SBUF0 = c);
+  32   1      }
+  33          
+  34          void UART_Send(char* *s) {
+  35   1          int i;
+  36   1          for (i = 0; i < sizeof(s); i++) {
+  37   2              WriteChar(s[i]);
+*** WARNING C214 IN LINE 37 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c:
+             - 'Argument': conversion: pointer to non-pointer
+  38   2          }
+  39   1      }
+  40          
+  41          void main(void) {
+  42   1          uint8_t i = 0;
+  43   1          unsigned long int *uuid_p;
+  44   1          unsigned long int uuid;
+  45   1          char * short_id = 0;
+  46   1          char buf[2];
+  47   1          int lastEdgeMask = 0;
+  48   1          unsigned char xdata
+C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/10/2020 15:40:21 PAGE 2   
 
-  46   1          //declare all vars at top because compiled asm can't declare later in time; also ws2812 code uses bare
-             - assembly and declaring later will cause heap crash :(
-  47   1          uint8_t i = 0;
-  48   1          unsigned long int *uuid_p;
-  49   1          unsigned long int uuid;
-  50   1          char * short_id = 0;
-  51   1          char buf[2];
-  52   1          int lastEdgeMask = 0;
-  53   1          unsigned char xdata
-  54   1          uuid_bytes[3], *bpos = uuid_bytes;
-  55   1          char * xdata
-  56   1          uart_buf[10];
-  57   1          char * xdata
-  58   1          uuid_str[8], *pos = uuid_str;
-  59   1          uint8_t xdata
-  60   1          receivedData[RECEIVED_DATA_ARRAY_SIZE] = {'\0'};
-  61   1      
-  62   1          uuid_p = 0xfc;
-*** WARNING C196 IN LINE 62 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20_
-             -main.c: mspace probably invalid
-  63   1          uuid = *uuid_p;
-  64   1      
-  65   1          //call
-  66   1          enter_DefaultMode_from_RESET();
+  49   1          uuid_bytes[3], *bpos = uuid_bytes;
+  50   1          char * xdata
+  51   1          uart_buf[10];
+  52   1          char * xdata
+  53   1          uuid_str[8], *pos = uuid_str;
+  54   1          uint8_t xdata
+  55   1          receivedData[10] = {'\0'};
+  56   1      
+  57   1          uuid_p = 0xfc;
+*** WARNING C196 IN LINE 57 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c:
+             - mspace probably invalid
+  58   1          uuid = *uuid_p;
+  59   1      
+  60   1          //call
+  61   1          enter_DefaultMode_from_RESET();
+  62   1      
+  63   1          IE_EA = 1;
+  64   1          XBR2 |= 0x40; //set crossbar regs.
+  65   1      
+  66   1          LED_main(0x44, 0x44, 0x33);
   67   1      
-  68   1          IE_EA = 1;
-  69   1          XBR2 |= 0x40; //set crossbar regs.
-  70   1      
-  71   1          UART_Begin(115200);
-  72   1          LED_main(0x44, 0x44, 0x33);
-  73   1      
-  74   1          //Parse chip UUID into long ID (4 bytes)
-  75   1          sprintf(uuid_str, "%lX", uuid);
-*** WARNING C182 IN LINE 75 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20_
-             -main.c: pointer to different objects
-  76   1          buf[0] = *pos;
-  77   1          if (buf[0] == 48) buf[0] = 49;
-  78   1          pos++;
-  79   1          buf[1] = *pos;
-  80   1          pos++;
-  81   1          *bpos = strtol(buf, NULL, 16);
-  82   1          bpos++;
-  83   1          buf[0] = *pos;
-  84   1          if (buf[0] == 48) buf[0] = 49;
-  85   1          pos++;
-  86   1          buf[1] = *pos;
-  87   1          pos++;
-  88   1          *bpos = strtol(buf, NULL, 16);
-  89   1          bpos++;
-  90   1          buf[0] = *pos;
-  91   1          if (buf[0] == 48) buf[0] = 49;
-  92   1          pos++;
-  93   1          buf[1] = *pos;
-  94   1          pos++;
-  95   1          *bpos = strtol(buf, NULL, 16);
-  96   1          bpos++;
-  97   1          buf[0] = *pos;
-  98   1          if (buf[0] < 49) buf[0] = 50;
-  99   1          pos++;
- 100   1          buf[1] = *pos;
- 101   1          pos++;
- 102   1          *bpos = strtol(buf, NULL, 16);
- 103   1      
-C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/09/2020 22:39:19 PAGE 3   
+  68   1          //Parse chip UUID into long ID (4 bytes)
+  69   1          sprintf(uuid_str, "%lX", uuid);
+*** WARNING C182 IN LINE 69 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c:
+             - pointer to different objects
+  70   1          buf[0] = *pos;
+  71   1          if (buf[0] == 48) buf[0] = 49;
+  72   1          pos++;
+  73   1          buf[1] = *pos;
+  74   1          pos++;
+  75   1          *bpos = strtol(buf, NULL, 16);
+  76   1          bpos++;
+  77   1          buf[0] = *pos;
+  78   1          if (buf[0] == 48) buf[0] = 49;
+  79   1          pos++;
+  80   1          buf[1] = *pos;
+  81   1          pos++;
+  82   1          *bpos = strtol(buf, NULL, 16);
+  83   1          bpos++;
+  84   1          buf[0] = *pos;
+  85   1          if (buf[0] == 48) buf[0] = 49;
+  86   1          pos++;
+  87   1          buf[1] = *pos;
+  88   1          pos++;
+  89   1          *bpos = strtol(buf, NULL, 16);
+  90   1          bpos++;
+  91   1          buf[0] = *pos;
+  92   1          if (buf[0] < 49) buf[0] = 50;
+  93   1          pos++;
+  94   1          buf[1] = *pos;
+  95   1          pos++;
+  96   1          *bpos = strtol(buf, NULL, 16);
+  97   1      
+  98   1          //Clear detect pins
+  99   1          DET_A = 0;
+ 100   1          DET_B = 0;
+ 101   1          DET_C = 0;
+ 102   1          SCON0_TI = 0;
+ 103   1          WriteChar(0xD0);
+ 104   1          while (1) {
+ 105   2              receivedData[i] = ReadChar();
+ 106   2      
+ 107   2              if (receivedData[i] == '\n') {
+C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/10/2020 15:40:21 PAGE 3   
 
- 104   1          //Clear detect pins
- 105   1          DET_A = 0;
- 106   1          DET_B = 0;
- 107   1          DET_C = 0;
- 108   1      
- 109   1          while (1) {
- 110   2              if (UART_Available(false)) {
- 111   3                  receivedData[i] = UART_ReadByte();
- 112   3                  if (receivedData[i] == '\n') {
- 113   4      
- 114   4                      //Assign short ID by long ID (0x01)
- 115   4                      if (receivedData[0] == 0x01) {
- 116   5                          //Is this tile the intended recipient?
- 117   5                          if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedDa
-             -ta[4] == uuid_bytes[2]) {
- 118   6                              short_id = (char *) receivedData[6];
- 119   6                              uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 119 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 120   6                              uart_buf[1] = 0xA0;
-*** WARNING C196 IN LINE 120 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 121   6                              UART_Send (uart_buf);
- 122   6                          }
- 123   5                      }
- 124   4      
- 125   4                      //Set edge pin (0x02)
- 126   4                      if (receivedData[0] == 0x02) {
- 127   5                          if (receivedData[1] == short_id || receivedData[1] == 0xFF) {
- 128   6                              lastEdgeMask = (int *) receivedData[2];
-*** WARNING C260 IN LINE 128 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: '=': pointer truncation
- 129   6                              if (receivedData[2] & 0x01) {
- 130   7                                  //Turn A on
- 131   7                                  DET_A = 1;
- 132   7                              } else {
- 133   7                                  DET_A = 0;
- 134   7                              }
- 135   6                              if (receivedData[2] & 0x02) {
- 136   7                                  //Turn B on
- 137   7                                  DET_B = 1;
- 138   7                              } else {
- 139   7                                  DET_B = 0;
- 140   7                              }
- 141   6                              if (receivedData[2] & 0x04) {
- 142   7                                  //Turn C on
- 143   7                                  DET_C = 1;
- 144   7                              } else {
- 145   7                                  DET_C = 0;
- 146   7                              }
- 147   6                              uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 147 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 148   6                              uart_buf[1] = 0xA0;
-*** WARNING C196 IN LINE 148 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 149   6                              UART_Send (uart_buf);
- 150   6                          }
- 151   5                      }
- 152   4      
- 153   4                      //Read long ID if selected by EDGE pin (0x03)
- 154   4                      if (receivedData[0] == 0x03) {
- 155   5                          if (lastEdgeMask == 0) { //Don't read tile if pins were commanded to turn on previousl
-C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/09/2020 22:39:19 PAGE 4   
+ 108   3      
+ 109   3                  //Assign short ID by long ID (0x01)
+ 110   3                  if (receivedData[0] == 0x01) {
+ 111   4                      //Is this tile the intended recipient?
+ 112   4                      if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedData[4
+             -] == uuid_bytes[2]
+ 113   4                              && receivedData[5] == uuid_bytes[3]) {
+ 114   5                          short_id = (char *) receivedData[6];
+ 115   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 115 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 116   5                          uart_buf[1] = 0x01;
+*** WARNING C196 IN LINE 116 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 117   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 117 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 118   5                          UART_Send (uart_buf);
+ 119   5                      }
+ 120   4                  }
+ 121   3      
+ 122   3                  //Set edge pin (0x02)
+ 123   3                  if (receivedData[0] == 0x02) {
+ 124   4                      if (receivedData[1] == short_id || receivedData[1] == 0xFF) {
+ 125   5                          lastEdgeMask = (int *) receivedData[2];
+*** WARNING C260 IN LINE 125 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: '=': pointer truncation
+ 126   5                          if (receivedData[2] & 0x01) {
+ 127   6                              //Turn A on
+ 128   6                              DET_A = 1;
+ 129   6                          } else {
+ 130   6                              DET_A = 0;
+ 131   6                          }
+ 132   5                          if (receivedData[2] & 0x02) {
+ 133   6                              //Turn B on
+ 134   6                              DET_B = 1;
+ 135   6                          } else {
+ 136   6                              DET_B = 0;
+ 137   6                          }
+ 138   5                          if (receivedData[2] & 0x04) {
+ 139   6                              //Turn C on
+ 140   6                              DET_C = 1;
+ 141   6                          } else {
+ 142   6                              DET_C = 0;
+ 143   6                          }
+ 144   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 144 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 145   5                          uart_buf[1] = 0x02;
+*** WARNING C196 IN LINE 145 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 146   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 146 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 147   5                          UART_Send (uart_buf);
+ 148   5                      }
+ 149   4                  }
+ 150   3      
+ 151   3                  //Read long ID if selected by EDGE pin (0x03)
+ 152   3                  if (receivedData[0] == 0x03) {
+ 153   4                      if (lastEdgeMask == 0 && short_id == 0) { //Don't read tile if pins were commanded to turn
+             - on previously.
+ 154   5                      //If any EDGE pin high, return long id.
+C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/10/2020 15:40:21 PAGE 4   
 
-             -y.
- 156   6                              //If any EDGE pin high, return long id.
- 157   6                              if (DET_A == 1 || DET_B == 1 || DET_C == 1) {
- 158   7                                  uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 158 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 159   7                                  uart_buf[1] = (char *) uuid_bytes[0];
- 160   7                                  uart_buf[2] = (char *) uuid_bytes[1];
- 161   7                                  uart_buf[3] = (char *) uuid_bytes[2];
- 162   7                                  uart_buf[4] = (char *) uuid_bytes[3];
- 163   7                                  uart_buf[5] = 0xA0; //null term
-*** WARNING C196 IN LINE 163 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 164   7                                  UART_Send (uart_buf);
- 165   7                              }
- 166   6                          }
- 167   5                      }
- 168   4      
- 169   4                      //Set tile color (0x08)
- 170   4                      if (receivedData[0] == 0x08) {
- 171   5                          if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
- 172   6                              uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 172 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 173   6                              uart_buf[1] = 0xA0;
-*** WARNING C196 IN LINE 173 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 174   6                              UART_Send (uart_buf);
- 175   6                              LED_main(receivedData[2], receivedData[3], receivedData[4]);
- 176   6                          }
- 177   5                      }
- 178   4      
- 179   4                      //Call for unconfigured tiles (0x09)
- 180   4                      if (receivedData[0] == 0x09) {
- 181   5                          if (short_id == 0) {
- 182   6                              uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 182 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 183   6                              uart_buf[1] = 0xA0;
-*** WARNING C196 IN LINE 183 OF C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\EFM8BB10F4G-A-QFN20
-             -_main.c: mspace probably invalid
- 184   6                              UART_Send (uart_buf);
- 185   6                          }
- 186   5                      }
- 187   4                      i = 0;
- 188   4                  } else {
- 189   4                      i++;
- 190   4                  }
- 191   3              }
- 192   2          }
- 193   1      }
+ 155   5                          if (DET_A == 1 || DET_B == 1 || DET_C == 1) {
+ 156   6                              uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 156 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 157   6                              uart_buf[1] = (char *) uuid_bytes[0];
+ 158   6                              uart_buf[2] = (char *) uuid_bytes[1];
+ 159   6                              uart_buf[3] = (char *) uuid_bytes[2];
+ 160   6                              uart_buf[4] = (char *) uuid_bytes[3];
+ 161   6                              uart_buf[5] = 0xA0; //null term
+*** WARNING C196 IN LINE 161 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 162   6                              UART_Send (uart_buf);
+ 163   6                          }
+ 164   5                      }
+ 165   4                  }
+ 166   3      
+ 167   3                  //Set tile color (0x08)
+ 168   3                  if (receivedData[0] == 0x08) {
+ 169   4                      if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
+ 170   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 170 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 171   5                          uart_buf[1] = 0x08;
+*** WARNING C196 IN LINE 171 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 172   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 172 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 173   5                          UART_Send (uart_buf);
+ 174   5                          LED_main(receivedData[2], receivedData[3], receivedData[4]);
+ 175   5                      }
+ 176   4                  }
+ 177   3      
+ 178   3                  //Call for unconfigured tiles (0x09)
+ 179   3                  if (receivedData[0] == 0x09) {
+ 180   4                      if (short_id == 0) {
+ 181   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 181 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 182   5                          uart_buf[1] = 0x09;
+*** WARNING C196 IN LINE 182 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 183   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 183 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\EFM8BB10F4G-A-QFN20_main.c
+             -: mspace probably invalid
+ 184   5                          UART_Send (uart_buf);
+ 185   5                      }
+ 186   4                  }
+ 187   3                  i = 0;
+ 188   3                  receivedData[0] = '\0';
+ 189   3              } else if (receivedData[i] != NULL) {
+ 190   3                  i++;
+ 191   3                  if (i == 10) {
+ 192   4                      i = 0;
+ 193   4                      receivedData[0] = '\0';
+ 194   4                  }
+ 195   3              }
+ 196   2          }
+ 197   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1478    ----
+   CODE SIZE        =   1122    ----
+C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/10/2020 15:40:21 PAGE 5   
+
    CONSTANT SIZE    =     14    ----
-   XDATA SIZE       =    120      75
+   XDATA SIZE       =   ----      73
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      5      19
+   DATA SIZE        =   ----      15
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =      4       1
+   BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
    HDATA SIZE       =   ----    ----
-C51 COMPILER V9.60.0.0   EFM8BB10F4G_A_QFN20_MAIN                                          08/09/2020 22:39:19 PAGE 5   
-
    XDATA CONST SIZE =   ----    ----
    FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  16 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  18 WARNING(S),  0 ERROR(S)
