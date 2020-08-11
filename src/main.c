@@ -34,7 +34,7 @@ char ReadChar() {
 
 void UART_Send(char* *s) {
     int i;
-    for (i = 0; i < sizeof(s); i++) {
+    for (i = 0; i < 10; i++) {
         WriteChar(s[i]);
         ReadChar();
     }
@@ -65,7 +65,7 @@ void main(void) {
     IE_EA = 1;
     XBR2 |= 0x40; //set crossbar regs.
 
-    LED_main(0, 255, 155);
+    LED_main(100, 100, 100);
 
     //Parse chip UUID into long ID (4 bytes)
     sprintf(uuid_str, "%lX", uuid);
@@ -125,20 +125,45 @@ void main(void) {
                     lastEdgeMask = (int *) receivedData[2];
                     if (receivedData[2] & 0x01) {
                         //Turn A on
+                        //0.1
+                        P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
+                                | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
                         DET_A = 1;
                     } else {
+                        P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
+                                | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
                         DET_A = 0;
                     }
                     if (receivedData[2] & 0x02) {
                         //Turn B on
+                        //1.5
+                        P1MDOUT = P1MDOUT_B0__PUSH_PULL | P1MDOUT_B1__OPEN_DRAIN | P1MDOUT_B2__OPEN_DRAIN | P1MDOUT_B3__OPEN_DRAIN | P1MDOUT_B4__OPEN_DRAIN
+                                | P1MDOUT_B5__PUSH_PULL | P1MDOUT_B6__OPEN_DRAIN;
                         DET_B = 1;
                     } else {
+                        P1MDOUT = P1MDOUT_B0__PUSH_PULL | P1MDOUT_B1__OPEN_DRAIN | P1MDOUT_B2__OPEN_DRAIN | P1MDOUT_B3__OPEN_DRAIN | P1MDOUT_B4__OPEN_DRAIN
+                                | P1MDOUT_B5__OPEN_DRAIN | P1MDOUT_B6__OPEN_DRAIN;
                         DET_B = 0;
                     }
                     if (receivedData[2] & 0x04) {
                         //Turn C on
+                        //0.6
+                        if (receivedData[2] & 0x01) {
+                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
+                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__PUSH_PULL | P0MDOUT_B7__OPEN_DRAIN;
+                        } else {
+                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
+                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__PUSH_PULL | P0MDOUT_B7__OPEN_DRAIN;
+                        }
                         DET_C = 1;
                     } else {
+                        if (receivedData[2] & 0x01) {
+                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
+                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
+                        } else {
+                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
+                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
+                        }
                         DET_C = 0;
                     }
                     uart_buf[0] = 0x80;

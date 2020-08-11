@@ -20,24 +20,24 @@ RM := rm -rf
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: EFM8BB10F4G-A-QFN20.omf
+all: KineticTiles.omf
 
 # Tool invocations
-EFM8BB10F4G-A-QFN20.omf: echo_path $(OBJS)
+KineticTiles.omf: echo_path $(OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Keil 8051 Linker'
-	LX51 "@EFM8BB10F4G-A-QFN20.lnp" || $(RC)
+	LX51 "@KineticTiles.lnp" || $(RC)
 	@echo 'Finished building target: $@'
 
 # Change from all upper case to the expected case
-	@-mv "EFM8BB10F4G-A-QFN20.OMF.CRBUILD" "$@"
+	@-mv "KINETICTILES.OMF.CRBUILD" "$@"
 
-# Generate hex file: EFM8BB10F4G-A-QFN20.hex
-	@Ohx51 "EFM8BB10F4G-A-QFN20.omf" "HEXFILE (EFM8BB10F4G-A-QFN20.hex)" "H386" 2>&1 >/dev/null
+# Generate hex file: KineticTiles.hex
+	@Ohx51 "KineticTiles.omf" "HEXFILE (KineticTiles.hex)" "H386" 2>&1 >/dev/null
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS) EFM8BB10F4G-A-QFN20.omf
+	-$(RM) $(EXECUTABLES)$(OBJS) KineticTiles.omf
 	-@echo ' '
 
 .PHONY: all clean dependents

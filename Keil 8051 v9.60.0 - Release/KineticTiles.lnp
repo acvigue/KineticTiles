@@ -1,0 +1,5 @@
+"./src/InitDevice.OBJ",
+"./src/SILABS_STARTUP.OBJ",
+"./src/main.OBJ",
+"./src/ws2812.OBJ"
+TO "KINETICTILES.OMF.CRBUILD" REMOVEUNUSED PRINT(.\KineticTiles.m51) PAGEWIDTH (120) PAGELENGTH (65) CLASSES( ECODE(C:0x0 - C:0xffe), HCONST(C:0x0 - C:0xffe), XDATA(X:0x0 - X:0xff), HDATA(X:0x0 - X:0xff))
