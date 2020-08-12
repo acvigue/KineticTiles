@@ -97,10 +97,10 @@ void main(void) {
     pos++;
     *bpos = strtol(buf, NULL, 16);
 
-    //Clear detect pins
-    DET_A = 0;
-    DET_B = 0;
-    DET_C = 0;
+    //Set all edge pins to Hi-Z
+    DET_A = 1;
+    DET_B = 1;
+    DET_C = 1;
     while (1) {
         receivedData[i] = ReadChar();
 
@@ -109,8 +109,7 @@ void main(void) {
             //Assign short ID by long ID (0x01)
             if (receivedData[0] == 0x01) {
                 //Is this tile the intended recipient?
-                if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedData[4] == uuid_bytes[2]
-                        && receivedData[5] == uuid_bytes[3]) {
+                if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedData[4] == uuid_bytes[2]) {
                     short_id = (char *) receivedData[6];
                     uart_buf[0] = 0x80;
                     uart_buf[1] = 0x01;
@@ -120,51 +119,24 @@ void main(void) {
             }
 
             //Set edge pin (0x02)
+            //Pins pulled to ground will influence neighbor if their pin is floating.
             if (receivedData[0] == 0x02) {
                 if (receivedData[1] == short_id || receivedData[1] == 0xFF) {
                     lastEdgeMask = (int *) receivedData[2];
                     if (receivedData[2] & 0x01) {
-                        //Turn A on
-                        //0.1
-                        P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
-                                | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
-                        DET_A = 1;
+                        DET_A = 0; //drive A to gnd
                     } else {
-                        P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
-                                | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
-                        DET_A = 0;
+                        DET_A = 1; //Hi-Z
                     }
                     if (receivedData[2] & 0x02) {
-                        //Turn B on
-                        //1.5
-                        P1MDOUT = P1MDOUT_B0__PUSH_PULL | P1MDOUT_B1__OPEN_DRAIN | P1MDOUT_B2__OPEN_DRAIN | P1MDOUT_B3__OPEN_DRAIN | P1MDOUT_B4__OPEN_DRAIN
-                                | P1MDOUT_B5__PUSH_PULL | P1MDOUT_B6__OPEN_DRAIN;
-                        DET_B = 1;
+                        DET_B = 0; //drive B to gnd
                     } else {
-                        P1MDOUT = P1MDOUT_B0__PUSH_PULL | P1MDOUT_B1__OPEN_DRAIN | P1MDOUT_B2__OPEN_DRAIN | P1MDOUT_B3__OPEN_DRAIN | P1MDOUT_B4__OPEN_DRAIN
-                                | P1MDOUT_B5__OPEN_DRAIN | P1MDOUT_B6__OPEN_DRAIN;
-                        DET_B = 0;
+                        DET_B = 1; //Hi-Z
                     }
                     if (receivedData[2] & 0x04) {
-                        //Turn C on
-                        //0.6
-                        if (receivedData[2] & 0x01) {
-                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
-                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__PUSH_PULL | P0MDOUT_B7__OPEN_DRAIN;
-                        } else {
-                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
-                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__PUSH_PULL | P0MDOUT_B7__OPEN_DRAIN;
-                        }
-                        DET_C = 1;
+                        DET_C = 0; //drive C to gnd
                     } else {
-                        if (receivedData[2] & 0x01) {
-                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
-                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
-                        } else {
-                            P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
-                                    | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN;
-                        }
-                        DET_C = 0;
+                        DET_C = 1; //Hi-Z
                     }
                     uart_buf[0] = 0x80;
                     uart_buf[1] = 0x02;
@@ -175,15 +147,15 @@ void main(void) {
 
             //Read long ID if selected by EDGE pin (0x03)
             if (receivedData[0] == 0x03) {
-                if (lastEdgeMask == 0 && short_id == 0) { //Don't read tile if pins were commanded to turn on previously.
-                //If any EDGE pin high, return long id.
-                    if (DET_A == 1 || DET_B == 1 || DET_C == 1) {
+                if (lastEdgeMask == 0 && short_id == 0) {
+                    //If any edge pin low, return long id.
+                    if (DET_A == 0 || DET_B == 0 || DET_C == 0) {
                         uart_buf[0] = 0x80;
                         uart_buf[1] = (char *) uuid_bytes[0];
                         uart_buf[2] = (char *) uuid_bytes[1];
                         uart_buf[3] = (char *) uuid_bytes[2];
                         uart_buf[4] = (char *) uuid_bytes[3];
-                        uart_buf[5] = 0xA0; //null term
+                        uart_buf[5] = 0xA0;
                         UART_Send (uart_buf);
                     }
                 }
@@ -208,6 +180,11 @@ void main(void) {
                     uart_buf[2] = 0xA0;
                     UART_Send (uart_buf);
                 }
+            }
+
+            //Halt
+            if (receivedData[0] == 0xFF) {
+                RSTSRC_SWRSF = 1;
             }
             i = 0;
         } else {

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   WS2812                                                            08/10/2020 22:09:05 PAGE 1   
+C51 COMPILER V9.60.0.0   WS2812                                                            08/11/2020 12:23:24 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE WS2812
@@ -63,7 +63,7 @@ line level    source
   49   1          //No NoOPs here because the if statement in SendByte takes 6-7 clock cycles (same as 6-7 NoOPs) +- 150
              -ms
   50   1          //Saleae doesn't see it as a valid ws2812 signal, but they still light up :/
-C51 COMPILER V9.60.0.0   WS2812                                                            08/10/2020 22:09:05 PAGE 2   
+C51 COMPILER V9.60.0.0   WS2812                                                            08/11/2020 12:23:24 PAGE 2   
 
   51   1      }
   52          void LED_Latch(void) {
@@ -128,7 +128,7 @@ line level    source
  111   2              LED__SendByte_(nr);
  112   2              LED__SendByte_(ng);
  113   2              LED__SendByte_(nb);
-C51 COMPILER V9.60.0.0   WS2812                                                            08/10/2020 22:09:05 PAGE 3   
+C51 COMPILER V9.60.0.0   WS2812                                                            08/11/2020 12:23:24 PAGE 3   
 
  114   2          }
  115   1          LED_Latch();

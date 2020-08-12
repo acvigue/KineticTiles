@@ -1,14 +1,15 @@
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/09/20 12:16:23 PAGE     1
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/11/20 23:23:40 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.15.3.0
 OBJECT MODULE PLACED IN .\src\SILABS_STARTUP.OBJ
 ASSEMBLER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v4\developer\toolchains\keil_8051\9.60\BIN\AX51.exe C:\Users\acvig
-                      \SimplicityStudio\v4_workspace\EFM8BB10F4G-A-QFN20\src\SILABS_STARTUP.A51 ERRORPRINT SET(SMALL,SIL
-                      ABS_STARTUP=1) DEBUG MACRO NOMOD51 INCDIR(C:\Users\acvig\SimplicityStudio\v4_workspace\EFM8BB10F4G
-                      -A-QFN20\inc;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/shared/si8051Ba
-                      se;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/EFM8BB1/inc) PRINT(.\src\
-                      SILABS_STARTUP.lst) COND SYMBOLS PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\src\SILABS_STARTUP.OBJ) 
+                      \SimplicityStudio\v4_workspace\KineticTiles\src\SILABS_STARTUP.A51 ERRORPRINT SET(SMALL,SILABS_STA
+                      RTUP=1) DEBUG MACRO NOMOD51 INCDIR(C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\inc;C
+                      :/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//kits/common/drivers/efm8_retargetser
+                      ial;C:/SiliconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/shared/si8051Base;C:/Sil
+                      iconLabs/SimplicityStudio/v4/developer/sdks/8051/v4.1.7//Device/EFM8BB1/inc) PRINT(.\src\SILABS_ST
+                      ARTUP.lst) COND SYMBOLS PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\src\SILABS_STARTUP.OBJ) 
 
 LOC    OBJ             LINE     SOURCE
 
@@ -61,9 +62,9 @@ LOC    OBJ             LINE     SOURCE
                          47     ;
                          48     ;</h>
                          49     ;------------------------------------------------------------------------------
-                         50     ;
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/09/20 12:16:23 PAGE     2
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/11/20 23:23:40 PAGE     2
 
+                         50     ;
                          51     ;<h> Reentrant Stack Initialization
                          52     ;
                          53     ;  The following EQU statements define the stack pointer for reentrant
@@ -126,9 +127,9 @@ LOC    OBJ             LINE     SOURCE
  0082                   110     DPL     DATA    82H
  0083                   111     DPH     DATA    83H
                         112     
-                        113                     NAME    ?C_STARTUP
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/09/20 12:16:23 PAGE     3
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/11/20 23:23:40 PAGE     3
 
+                        113                     NAME    ?C_STARTUP
                         114     
                         115     
 ------                  116     ?C_C51STARTUP   SEGMENT   CODE
@@ -191,9 +192,9 @@ LOC    OBJ             LINE     SOURCE
                                 EXTRN DATA (?C_IBP)
                                 
                                                 MOV     ?C_IBP,#LOW IBPSTACKTOP
-                                ENDIF
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/09/20 12:16:23 PAGE     4
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/11/20 23:23:40 PAGE     4
 
+                                ENDIF
                         177     
                         178     IF XBPSTACK <> 0
                                 EXTRN DATA (?C_XBP)
@@ -222,7 +223,7 @@ LOC    OBJ             LINE     SOURCE
 00000C 020000     E     201                     LJMP    ?C_START
                         202     
                         203                     END
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/09/20 12:16:23 PAGE     5
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        08/11/20 23:23:40 PAGE     5
 
 SYMBOL TABLE LISTING
 ------ ----- -------

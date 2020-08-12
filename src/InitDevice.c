@@ -57,6 +57,18 @@ extern void PORTS_0_enter_DefaultMode_from_RESET(void) {
     // [P0MDIN - Port 0 Input Mode]$
 
     // $[P0SKIP - Port 0 Skip]
+    /***********************************************************************
+     - P0.0 pin is not skipped by the crossbar
+     - P0.1 pin is skipped by the crossbar
+     - P0.2 pin is not skipped by the crossbar
+     - P0.3 pin is not skipped by the crossbar
+     - P0.4 pin is not skipped by the crossbar
+     - P0.5 pin is not skipped by the crossbar
+     - P0.6 pin is skipped by the crossbar
+     - P0.7 pin is not skipped by the crossbar
+     ***********************************************************************/
+    P0SKIP = P0SKIP_B0__NOT_SKIPPED | P0SKIP_B1__SKIPPED | P0SKIP_B2__NOT_SKIPPED | P0SKIP_B3__NOT_SKIPPED | P0SKIP_B4__NOT_SKIPPED | P0SKIP_B5__NOT_SKIPPED
+            | P0SKIP_B6__SKIPPED | P0SKIP_B7__NOT_SKIPPED;
     // [P0SKIP - Port 0 Skip]$
 
     // $[P0MASK - Port 0 Mask]
@@ -89,6 +101,17 @@ extern void PORTS_1_enter_DefaultMode_from_RESET(void) {
     // [P1MDIN - Port 1 Input Mode]$
 
     // $[P1SKIP - Port 1 Skip]
+    /***********************************************************************
+     - P1.0 pin is not skipped by the crossbar
+     - P1.1 pin is not skipped by the crossbar
+     - P1.2 pin is not skipped by the crossbar
+     - P1.3 pin is not skipped by the crossbar
+     - P1.4 pin is not skipped by the crossbar
+     - P1.5 pin is skipped by the crossbar
+     - P1.6 pin is not skipped by the crossbar
+     ***********************************************************************/
+    P1SKIP = P1SKIP_B0__NOT_SKIPPED | P1SKIP_B1__NOT_SKIPPED | P1SKIP_B2__NOT_SKIPPED | P1SKIP_B3__NOT_SKIPPED | P1SKIP_B4__NOT_SKIPPED | P1SKIP_B5__SKIPPED
+            | P1SKIP_B6__NOT_SKIPPED;
     // [P1SKIP - Port 1 Skip]$
 
     // $[P1MASK - Port 1 Mask]

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 22:25:33 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              08/11/2020 12:23:24 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -60,11 +60,13 @@ line level    source
   44   1          uint8_t i = 0;
   45   1          unsigned long int *uuid_p;
   46   1          unsigned long int uuid;
-  47   1          char * short_id = 0;
+  47   1          char * short_id = 1;
+*** WARNING C196 IN LINE 47 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably inv
+             -alid
+C51 COMPILER V9.60.0.0   MAIN                                                              08/11/2020 12:23:24 PAGE 2   
+
   48   1          char buf[2];
   49   1          int lastEdgeMask = 0;
-C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 22:25:33 PAGE 2   
-
   50   1          unsigned char xdata
   51   1          uuid_bytes[3], *bpos = uuid_bytes;
   52   1          char * xdata
@@ -119,17 +121,17 @@ line level    source
   97   1          pos++;
   98   1          *bpos = strtol(buf, NULL, 16);
   99   1      
- 100   1          //Clear detect pins
- 101   1          DET_A = 0;
- 102   1          DET_B = 0;
- 103   1          DET_C = 0;
+ 100   1          //Set all edge pins to Hi-Z
+ 101   1          DET_A = 1;
+ 102   1          DET_B = 1;
+ 103   1          DET_C = 1;
  104   1          while (1) {
  105   2              receivedData[i] = ReadChar();
  106   2      
+C51 COMPILER V9.60.0.0   MAIN                                                              08/11/2020 12:23:24 PAGE 3   
+
  107   2              if (receivedData[i] == '\n') {
  108   3      
-C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 22:25:33 PAGE 3   
-
  109   3                  //Assign short ID by long ID (0x01)
  110   3                  if (receivedData[0] == 0x01) {
  111   4                      //Is this tile the intended recipient?
@@ -151,148 +153,104 @@ line level    source
  120   4                  }
  121   3      
  122   3                  //Set edge pin (0x02)
- 123   3                  if (receivedData[0] == 0x02) {
- 124   4                      if (receivedData[1] == short_id || receivedData[1] == 0xFF) {
- 125   5                          lastEdgeMask = (int *) receivedData[2];
-*** WARNING C260 IN LINE 125 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: '=': pointer trunc
+ 123   3                  //Pins pulled to ground will influence neighbor if their pin is floating.
+ 124   3                  if (receivedData[0] == 0x02) {
+ 125   4                      if (receivedData[1] == short_id || receivedData[1] == 0xFF) {
+ 126   5                          lastEdgeMask = (int *) receivedData[2];
+*** WARNING C260 IN LINE 126 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: '=': pointer trunc
              -ation
- 126   5                          if (receivedData[2] & 0x01) {
- 127   6                              //Turn A on
- 128   6                              //0.1
- 129   6                              P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DRAIN 
-             -| P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
- 130   6                                      | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN
-             -;
- 131   6                              DET_A = 1;
- 132   6                          } else {
- 133   6                              P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN
-             - | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
- 134   6                                      | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_DRAIN
-             -;
- 135   6                              DET_A = 0;
+ 127   5                          if (receivedData[2] & 0x01) {
+ 128   6                              DET_A = 0; //drive A to gnd
+ 129   6                          } else {
+ 130   6                              DET_A = 1; //Hi-Z
+ 131   6                          }
+ 132   5                          if (receivedData[2] & 0x02) {
+ 133   6                              DET_B = 0; //drive B to gnd
+ 134   6                          } else {
+ 135   6                              DET_B = 1; //Hi-Z
  136   6                          }
- 137   5                          if (receivedData[2] & 0x02) {
- 138   6                              //Turn B on
- 139   6                              //1.5
- 140   6                              P1MDOUT = P1MDOUT_B0__PUSH_PULL | P1MDOUT_B1__OPEN_DRAIN | P1MDOUT_B2__OPEN_DRAIN 
-             -| P1MDOUT_B3__OPEN_DRAIN | P1MDOUT_B4__OPEN_DRAIN
- 141   6                                      | P1MDOUT_B5__PUSH_PULL | P1MDOUT_B6__OPEN_DRAIN;
- 142   6                              DET_B = 1;
- 143   6                          } else {
- 144   6                              P1MDOUT = P1MDOUT_B0__PUSH_PULL | P1MDOUT_B1__OPEN_DRAIN | P1MDOUT_B2__OPEN_DRAIN 
-             -| P1MDOUT_B3__OPEN_DRAIN | P1MDOUT_B4__OPEN_DRAIN
- 145   6                                      | P1MDOUT_B5__OPEN_DRAIN | P1MDOUT_B6__OPEN_DRAIN;
- 146   6                              DET_B = 0;
- 147   6                          }
- 148   5                          if (receivedData[2] & 0x04) {
- 149   6                              //Turn C on
- 150   6                              //0.6
- 151   6                              if (receivedData[2] & 0x01) {
- 152   7                                  P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DR
-             -AIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
- 153   7                                          | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__PUSH_PULL | P0MDOUT_B7__OPEN_DR
-             -AIN;
- 154   7                              } else {
-C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 22:25:33 PAGE 4   
+ 137   5                          if (receivedData[2] & 0x04) {
+ 138   6                              DET_C = 0; //drive C to gnd
+ 139   6                          } else {
+ 140   6                              DET_C = 1; //Hi-Z
+ 141   6                          }
+ 142   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 142 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 143   5                          uart_buf[1] = 0x02;
+*** WARNING C196 IN LINE 143 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 144   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 144 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 145   5                          UART_Send (uart_buf);
+ 146   5                      }
+ 147   4                  }
+ 148   3      
+ 149   3                  //Read long ID if selected by EDGE pin (0x03)
+ 150   3                  if (receivedData[0] == 0x03) {
+ 151   4                      if (lastEdgeMask == 0 && short_id == 0) {
+ 152   5                          //If any edge pin low, return long id.
+ 153   5                          if (DET_A == 0 || DET_B == 0 || DET_C == 0) {
+ 154   6                              uart_buf[0] = 0x80;
+C51 COMPILER V9.60.0.0   MAIN                                                              08/11/2020 12:23:24 PAGE 4   
 
- 155   7                                  P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_D
-             -RAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
- 156   7                                          | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__PUSH_PULL | P0MDOUT_B7__OPEN_DR
-             -AIN;
- 157   7                              }
- 158   6                              DET_C = 1;
- 159   6                          } else {
- 160   6                              if (receivedData[2] & 0x01) {
- 161   7                                  P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__PUSH_PULL | P0MDOUT_B2__OPEN_DR
-             -AIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
- 162   7                                          | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_D
-             -RAIN;
- 163   7                              } else {
- 164   7                                  P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_D
-             -RAIN | P0MDOUT_B3__OPEN_DRAIN | P0MDOUT_B4__PUSH_PULL
- 165   7                                          | P0MDOUT_B5__OPEN_DRAIN | P0MDOUT_B6__OPEN_DRAIN | P0MDOUT_B7__OPEN_D
-             -RAIN;
- 166   7                              }
- 167   6                              DET_C = 0;
- 168   6                          }
- 169   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 154 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 155   6                              uart_buf[1] = (char *) uuid_bytes[0];
+ 156   6                              uart_buf[2] = (char *) uuid_bytes[1];
+ 157   6                              uart_buf[3] = (char *) uuid_bytes[2];
+ 158   6                              uart_buf[4] = (char *) uuid_bytes[3];
+ 159   6                              uart_buf[5] = 0xA0;
+*** WARNING C196 IN LINE 159 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 160   6                              UART_Send (uart_buf);
+ 161   6                          }
+ 162   5                      }
+ 163   4                  }
+ 164   3      
+ 165   3                  //Set tile color (0x08)
+ 166   3                  if (receivedData[0] == 0x08) {
+ 167   4                      if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
+ 168   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 168 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 169   5                          uart_buf[1] = 0x08;
 *** WARNING C196 IN LINE 169 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
- 170   5                          uart_buf[1] = 0x02;
+ 170   5                          uart_buf[2] = 0xA0;
 *** WARNING C196 IN LINE 170 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
- 171   5                          uart_buf[2] = 0xA0;
-*** WARNING C196 IN LINE 171 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
+ 171   5                          LED_main(receivedData[2], receivedData[3], receivedData[4]);
  172   5                          UART_Send (uart_buf);
  173   5                      }
  174   4                  }
  175   3      
- 176   3                  //Read long ID if selected by EDGE pin (0x03)
- 177   3                  if (receivedData[0] == 0x03) {
- 178   4                      if (lastEdgeMask == 0 && short_id == 0) { //Don't read tile if pins were commanded to turn
-             - on previously.
- 179   5                      //If any EDGE pin high, return long id.
- 180   5                          if (DET_A == 1 || DET_B == 1 || DET_C == 1) {
- 181   6                              uart_buf[0] = 0x80;
+ 176   3                  //Call for unconfigured tiles (0x09)
+ 177   3                  if (receivedData[0] == 0x09) {
+ 178   4                      if (short_id == 0) {
+ 179   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 179 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 180   5                          uart_buf[1] = 0x09;
+*** WARNING C196 IN LINE 180 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+             -valid
+ 181   5                          uart_buf[2] = 0xA0;
 *** WARNING C196 IN LINE 181 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
- 182   6                              uart_buf[1] = (char *) uuid_bytes[0];
- 183   6                              uart_buf[2] = (char *) uuid_bytes[1];
- 184   6                              uart_buf[3] = (char *) uuid_bytes[2];
- 185   6                              uart_buf[4] = (char *) uuid_bytes[3];
- 186   6                              uart_buf[5] = 0xA0; //null term
-*** WARNING C196 IN LINE 186 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 187   6                              UART_Send (uart_buf);
- 188   6                          }
- 189   5                      }
- 190   4                  }
- 191   3      
- 192   3                  //Set tile color (0x08)
- 193   3                  if (receivedData[0] == 0x08) {
- 194   4                      if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
- 195   5                          uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 195 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 196   5                          uart_buf[1] = 0x08;
-*** WARNING C196 IN LINE 196 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
-C51 COMPILER V9.60.0.0   MAIN                                                              08/10/2020 22:25:33 PAGE 5   
-
- 197   5                          uart_buf[2] = 0xA0;
-*** WARNING C196 IN LINE 197 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 198   5                          LED_main(receivedData[2], receivedData[3], receivedData[4]);
- 199   5                          UART_Send (uart_buf);
- 200   5                      }
- 201   4                  }
- 202   3      
- 203   3                  //Call for unconfigured tiles (0x09)
- 204   3                  if (receivedData[0] == 0x09) {
- 205   4                      if (short_id == 0) {
- 206   5                          uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 206 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 207   5                          uart_buf[1] = 0x09;
-*** WARNING C196 IN LINE 207 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 208   5                          uart_buf[2] = 0xA0;
-*** WARNING C196 IN LINE 208 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 209   5                          UART_Send (uart_buf);
- 210   5                      }
- 211   4                  }
- 212   3                  i = 0;
- 213   3              } else {
- 214   3                  i++;
- 215   3              }
- 216   2          }
- 217   1      }
+ 182   5                          UART_Send (uart_buf);
+ 183   5                      }
+ 184   4                  }
+ 185   3                  i = 0;
+ 186   3              } else {
+ 187   3                  i++;
+ 188   3              }
+ 189   2          }
+ 190   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1126    ----
+   CODE SIZE        =   1092    ----
    CONSTANT SIZE    =     14    ----
    XDATA SIZE       =   ----      73
    PDATA SIZE       =   ----    ----
@@ -300,10 +258,12 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   MAIN                                                              08/11/2020 12:23:24 PAGE 5   
+
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
    FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  18 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  19 WARNING(S),  0 ERROR(S)
