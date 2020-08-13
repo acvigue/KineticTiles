@@ -1,4 +1,4 @@
-LX51 LINKER/LOCATER V4.66.97.0                                                          08/11/2020  23:23:41  PAGE 1
+LX51 LINKER/LOCATER V4.66.97.0                                                          08/12/2020  15:07:21  PAGE 1
 
 
 LX51 LINKER/LOCATER V4.66.97.0, INVOKED BY:
@@ -64,7 +64,7 @@ INPUT MODULES INCLUDED:
   C:\SILICONLABS\SIMPLICITYSTUDIO\V4\DEVELOPER\TOOLCHAINS\KEIL_8051\9.60\LIB\C51S.LIB (?C?CSTPTR)
          COMMENT TYPE 1: A51 / ASM51 Assembler
   C:\SILICONLABS\SIMPLICITYSTUDIO\V4\DEVELOPER\TOOLCHAINS\KEIL_8051\9.60\LIB\C51S.LIB (?C?IILDX)
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 2
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 2
 
 
          COMMENT TYPE 1: A51 / ASM51 Assembler
@@ -129,7 +129,7 @@ I:000000H   I:000000H   I:00007FH   000030H   DATA
 I:000020H.0 I:000020H.0 I:00002FH.7 000001H.1 BIT
 I:000000H   I:000000H   I:0000FFH   000001H   IDATA
 C:000000H   C:000000H   C:00FFFFH   00000EH   CONST
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 3
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 3
 
 
 
@@ -194,7 +194,7 @@ OVERLAY MAP OF MODULE:   KINETICTILES.OMF.CRBUILD (INITDEVICE)
 
 FUNCTION/MODULE                                BIT_GROUP   DATA_GROUP   XDATA_GROUP
 --> CALLED FUNCTION/MODULE                    START  STOP  START  STOP  START  STOP
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 4
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 4
 
 
 ===================================================================================
@@ -259,7 +259,7 @@ _GAMMA/WS2812                                 ----- -----  ----- -----  ----- --
   +--> _POW/POW
 
 _POW/POW                                      ----- -----  0032H 003BH  ----- -----
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 5
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 5
 
 
   +--> LOG/LOG
@@ -324,7 +324,7 @@ PUBLIC SYMBOLS OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       01000204H   CODE     ---       ?C?FPDIV
       01000316H   CODE     ---       ?C?FPGETOPN2
       010000FBH   CODE     ---       ?C?FPMUL
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 6
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 6
 
 
       0100034BH   CODE     ---       ?C?FPNANRESULT
@@ -389,7 +389,7 @@ PUBLIC SYMBOLS OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
 *SFR* 000000E8H   DATA     BYTE      ADC0CN0
 *SFR* 000000E8H.6 DATA     BIT       ADC0CN0_ADBMEN
 *SFR* 000000E8H.4 DATA     BIT       ADC0CN0_ADBUSY
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 7
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 7
 
 
 *SFR* 000000E8H.0 DATA     BIT       ADC0CN0_ADCM0
@@ -454,7 +454,7 @@ PUBLIC SYMBOLS OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
 *SFR* 000000A8H.1 DATA     BIT       IE_ET0
 *SFR* 000000A8H.3 DATA     BIT       IE_ET1
 *SFR* 000000A8H.5 DATA     BIT       IE_ET2
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 8
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 8
 
 
 *SFR* 000000A8H.0 DATA     BIT       IE_EX0
@@ -519,7 +519,7 @@ PUBLIC SYMBOLS OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
 *SFR* 000000FBH   DATA     WORD      PCA0CP0
 *SFR* 000000E9H   DATA     WORD      PCA0CP1
 *SFR* 000000EBH   DATA     WORD      PCA0CP2
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 9
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 9
 
 
 *SFR* 000000FCH   DATA     BYTE      PCA0CPH0
@@ -584,7 +584,7 @@ PUBLIC SYMBOLS OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
 *SFR* 00000081H   DATA     BYTE      SP
 *SFR* 000000A1H   DATA     BYTE      SPI0CFG
 *SFR* 000000A2H   DATA     BYTE      SPI0CKR
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 10
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 10
 
 
 *SFR* 000000F8H   DATA     BYTE      SPI0CN0
@@ -649,7 +649,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
 
       VALUE       REP       CLASS    TYPE      SYMBOL NAME
       ====================================================
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 11
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 11
 
 
       ---         MODULE    ---      ---       INITDEVICE
@@ -714,7 +714,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       000000F0H.6 SFRSYM    DATA     BIT       B_B6
       000000C5H   SFRSYM    DATA     WORD      ADC0LT
       00000098H.5 SFRSYM    DATA     BIT       SCON0_MCE
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 12
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 12
 
 
       000000F0H.7 SFRSYM    DATA     BIT       B_B7
@@ -779,7 +779,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       000000D8H.6 SFRSYM    DATA     BIT       PCA0CN0_CR
       000000A8H.2 SFRSYM    DATA     BIT       IE_EX1
       00000098H.7 SFRSYM    DATA     BIT       SCON0_SMODE
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 13
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 13
 
 
       000000B5H   SFRSYM    DATA     BYTE      DEVICEID
@@ -844,7 +844,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       000000C8H.7 SFRSYM    DATA     BIT       TMR2CN0_TF2H
       000000C8H.3 SFRSYM    DATA     BIT       TMR2CN0_T2SPLIT
       000000D0H.6 SFRSYM    DATA     BIT       PSW_AC
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 14
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 14
 
 
       000000F8H   SFRSYM    DATA     BYTE      SPI0CN0
@@ -909,7 +909,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
 
       010017ABH   BLOCK     CODE     ---       LVL=0
       010017ABH   LINE      CODE     ---       #22
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 15
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 15
 
 
       010017ABH   LINE      CODE     ---       #24
@@ -974,7 +974,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       01001822H   LINE      CODE     ---       #232
       01001825H   LINE      CODE     ---       #235
       ---         BLOCKEND  ---      ---       LVL=0
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 16
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 16
 
 
 
@@ -1039,7 +1039,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       01001819H   LINE      CODE     ---       #201
       ---         BLOCKEND  ---      ---       LVL=0
 
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 17
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 17
 
 
       ---         MODULE    ---      ---       MAIN
@@ -1104,7 +1104,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       00000098H.5 SFRSYM    DATA     BIT       SCON0_MCE
       000000F0H.7 SFRSYM    DATA     BIT       B_B7
       000000E1H   SFRSYM    DATA     BYTE      XBR0
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 18
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 18
 
 
       000000C1H   SFRSYM    DATA     BYTE      SMB0CF
@@ -1169,7 +1169,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       00000098H.7 SFRSYM    DATA     BIT       SCON0_SMODE
       000000B5H   SFRSYM    DATA     BYTE      DEVICEID
       000000A9H   SFRSYM    DATA     BYTE      CLKSEL
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 19
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 19
 
 
       000000F8H.0 SFRSYM    DATA     BIT       SPI0CN0_SPIEN
@@ -1234,7 +1234,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       000000D0H.6 SFRSYM    DATA     BIT       PSW_AC
       000000F8H   SFRSYM    DATA     BYTE      SPI0CN0
       000000C7H   SFRSYM    DATA     BYTE      HFO0CAL
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 20
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 20
 
 
       00000088H.5 SFRSYM    DATA     BIT       TCON_TF0
@@ -1299,7 +1299,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       0100184EH   BLOCK     CODE     ---       LVL=0
       0100184EH   LINE      CODE     ---       #18
       0100184EH   LINE      CODE     ---       #20
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 21
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 21
 
 
       ---         BLOCKEND  ---      ---       LVL=0
@@ -1364,7 +1364,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       01000DE2H   LINE      CODE     ---       #60
       01000DEDH   LINE      CODE     ---       #63
       01000DF0H   LINE      CODE     ---       #65
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 22
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 22
 
 
       01000DF2H   LINE      CODE     ---       #66
@@ -1429,7 +1429,7 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       01001095H   LINE      CODE     ---       #137
       01001097H   LINE      CODE     ---       #138
       01001099H   LINE      CODE     ---       #139
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 23
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 23
 
 
       0100109BH   LINE      CODE     ---       #140
@@ -1469,11 +1469,13 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       0100117DH   LINE      CODE     ---       #181
       01001180H   LINE      CODE     ---       #182
       01001180H   LINE      CODE     ---       #183
-      01001180H   LINE      CODE     ---       #184
-      01001183H   LINE      CODE     ---       #185
-      01001186H   LINE      CODE     ---       #186
-      01001188H   LINE      CODE     ---       #187
-      01001188H   LINE      CODE     ---       #188
+      01001180H   LINE      CODE     ---       #186
+      01001180H   LINE      CODE     ---       #190
+      01001180H   LINE      CODE     ---       #191
+      01001183H   LINE      CODE     ---       #192
+      01001186H   LINE      CODE     ---       #193
+      01001188H   LINE      CODE     ---       #194
+      01001188H   LINE      CODE     ---       #195
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       WS2812
@@ -1492,11 +1494,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       000000BCH   SFRSYM    DATA     BYTE      ADC0CF
       000000C8H.0 SFRSYM    DATA     BIT       TMR2CN0_T2XCLK
       000000C0H.7 SFRSYM    DATA     BIT       SMB0CN0_MASTER
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 24
+
+
       000000F9H   SFRSYM    DATA     WORD      PCA0
       000000E6H   SFRSYM    DATA     BYTE      EIE1
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 24
-
-
       000000C0H.1 SFRSYM    DATA     BIT       SMB0CN0_ACK
       0000008FH   SFRSYM    DATA     BYTE      PSCTL
       000000E4H   SFRSYM    DATA     BYTE      IT01CF
@@ -1557,11 +1559,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       0000009DH   SFRSYM    DATA     BYTE      CMP0MD
       000000E0H.4 SFRSYM    DATA     BIT       ACC_ACC4
       000000B1H   SFRSYM    DATA     BYTE      LFO0CN
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 25
+
+
       000000ABH   SFRSYM    DATA     BYTE      CMP1MD
       000000D8H.0 SFRSYM    DATA     BIT       PCA0CN0_CCF0
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 25
-
-
       000000E0H.5 SFRSYM    DATA     BIT       ACC_ACC5
       000000D8H.1 SFRSYM    DATA     BIT       PCA0CN0_CCF1
       000000E0H.6 SFRSYM    DATA     BIT       ACC_ACC6
@@ -1622,11 +1624,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       000000B8H.4 SFRSYM    DATA     BIT       IP_PS0
       0000008DH   SFRSYM    DATA     BYTE      TH1
       000000FAH   SFRSYM    DATA     BYTE      PCA0H
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 26
+
+
       000000B8H.1 SFRSYM    DATA     BIT       IP_PT0
       000000B8H.3 SFRSYM    DATA     BIT       IP_PT1
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 26
-
-
       000000C0H.2 SFRSYM    DATA     BIT       SMB0CN0_ARBLOST
       000000B8H.5 SFRSYM    DATA     BIT       IP_PT2
       0000008AH   SFRSYM    DATA     BYTE      TL0
@@ -1687,11 +1689,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       000000DEH   SFRSYM    DATA     BYTE      CRC0DAT
       00000088H.2 SFRSYM    DATA     BIT       TCON_IT1
       000000E8H.2 SFRSYM    DATA     BIT       ADC0CN0_ADCM2
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 27
+
+
       00000098H   SFRSYM    DATA     BYTE      SCON0
       000000F6H   SFRSYM    DATA     BYTE      PRTDRV
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 27
-
-
       000000EDH   SFRSYM    DATA     BYTE      P1MAT
       000000E8H.3 SFRSYM    DATA     BIT       ADC0CN0_ADWINT
       000000E8H.4 SFRSYM    DATA     BIT       ADC0CN0_ADBUSY
@@ -1752,11 +1754,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       010017F7H   LINE      CODE     ---       #27
       010017F8H   LINE      CODE     ---       #28
       010017F9H   LINE      CODE     ---       #29
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 28
+
+
       010017FAH   LINE      CODE     ---       #30
       010017FBH   LINE      CODE     ---       #31
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 28
-
-
       ---         BLOCKEND  ---      ---       LVL=0
 
       010017D9H   BLOCK     CODE     ---       LVL=0
@@ -1817,11 +1819,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       01001645H   LINE      CODE     ---       #78
       01001648H   LINE      CODE     ---       #79
       0100164AH   LINE      CODE     ---       #80
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 29
+
+
       0100164DH   LINE      CODE     ---       #81
       01001651H   LINE      CODE     ---       #82
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 29
-
-
       01001653H   LINE      CODE     ---       #83
       01001656H   LINE      CODE     ---       #84
       01001658H   LINE      CODE     ---       #85
@@ -1882,11 +1884,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       01000204H   PUBLIC    CODE     ---       ?C?FPDIV
 
       ---         MODULE    ---      ---       ?C?FCAST
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 30
+
+
       010002ABH   PUBLIC    CODE     ---       ?C?FCASTC
       010002A6H   PUBLIC    CODE     ---       ?C?FCASTI
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 30
-
-
       010002A1H   PUBLIC    CODE     ---       ?C?FCASTL
 
       ---         MODULE    ---      ---       ?C?CASTF
@@ -1947,10 +1949,10 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
       010006E9H   PUBLIC    CODE     ---       ?C?CLDPTR
 
       ---         MODULE    ---      ---       ?C?CLDOPTR
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 31
+
+
       01000702H   PUBLIC    CODE     ---       ?C?CLDOPTR
-
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 31
-
 
       ---         MODULE    ---      ---       ?C?CSTPTR
       0100072FH   PUBLIC    CODE     ---       ?C?CSTPTR
@@ -2012,11 +2014,11 @@ SYMBOL TABLE OF MODULE:  KINETICTILES.OMF.CRBUILD (INITDEVICE)
 
       ---         MODULE    ---      ---       ?C?PLDPDATA
       010008B2H   PUBLIC    CODE     ---       ?C?PLDPDATA
+LX51 LINKER/LOCATER V4.66.97.0                                                        08/12/2020  15:07:21  PAGE 32
+
+
 
       ---         MODULE    ---      ---       ?C?PLDCODE
-LX51 LINKER/LOCATER V4.66.97.0                                                        08/11/2020  23:23:41  PAGE 32
-
-
       010008BBH   PUBLIC    CODE     ---       ?C?PLDCODE
 
       ---         MODULE    ---      ---       ?C?PSTPTR

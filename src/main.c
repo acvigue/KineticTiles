@@ -184,11 +184,13 @@ void main(void) {
 
             //Halt
             if (receivedData[0] == 0xFF) {
-                RSTSRC_SWRSF = 1;
+                //__asm MOV 0A7h,#0
+                //__asm MOV 00,#0A5h
+                //__asm MOV 0EFh,#010h
             }
-            i = 0;
-        } else {
-            i++;
-        }
+        i = 0;
+    } else {
+        i++;
     }
+}
 }
