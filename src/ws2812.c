@@ -11,6 +11,7 @@ SI_SBIT(PIX, SFR_P1, 0);
 //gamma correction function for more uniform colors.
 int gamma(uint8_t i) {
     return (int) (pow((float) i / (float) 255, 2.8) * 255 + 0.5);
+    //return i;
 }
 
 void LED__SendZero_(void) {
@@ -98,6 +99,12 @@ void LED__SendByte_(unsigned char dat) {
         LED__SendOne_();
     } else
         LED__SendZero_();
+}
+
+void LED__SendPixel_(uint8_t g, uint8_t r, uint8_t b) {
+    LED__SendByte_(r);
+    LED__SendByte_(g);
+    LED__SendByte_(b);
 }
 
 void LED_main(unsigned char g, unsigned char r, unsigned char b) {

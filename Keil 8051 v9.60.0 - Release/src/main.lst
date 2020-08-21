@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              08/12/2020 15:07:21 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              08/15/2020 17:11:20 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -61,9 +61,9 @@ line level    source
   44   1          uint8_t i = 0;
   45   1          unsigned long int *uuid_p;
   46   1          unsigned long int uuid;
-  47   1          char * short_id = 0;
+  47   1          int short_id = 0;
   48   1          char buf[2];
-C51 COMPILER V9.60.0.0   MAIN                                                              08/12/2020 15:07:21 PAGE 2   
+C51 COMPILER V9.60.0.0   MAIN                                                              08/15/2020 17:11:20 PAGE 2   
 
   49   1          int lastEdgeMask = 0;
   50   1          unsigned char xdata
@@ -73,7 +73,7 @@ line level    source
   54   1          char * xdata
   55   1          uuid_str[8], *pos = uuid_str;
   56   1          uint8_t xdata
-  57   1          receivedData[10] = {'\0'};
+  57   1          receivedData[         ] = {'\0'};
   58   1      
   59   1          uuid_p = 0xfc;
 *** WARNING C196 IN LINE 59 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably inv
@@ -128,7 +128,7 @@ line level    source
  105   2              receivedData[i] = ReadChar();
  106   2      
  107   2              if (receivedData[i] == '\n') {
-C51 COMPILER V9.60.0.0   MAIN                                                              08/12/2020 15:07:21 PAGE 3   
+C51 COMPILER V9.60.0.0   MAIN                                                              08/15/2020 17:11:20 PAGE 3   
 
  108   3      
  109   3                  //Assign short ID by long ID (0x01)
@@ -136,7 +136,9 @@ line level    source
  111   4                      //Is this tile the intended recipient?
  112   4                      if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedData[4
              -] == uuid_bytes[2]) {
- 113   5                          short_id = (char *) receivedData[6];
+ 113   5                          short_id = (int *)receivedData[6];
+*** WARNING C260 IN LINE 113 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: '=': pointer trunc
+             -ation
  114   5                          uart_buf[0] = 0x80;
 *** WARNING C196 IN LINE 114 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
@@ -191,10 +193,10 @@ line level    source
  151   5                          //If any edge pin low, return long id.
  152   5                          if (DET_A == 0 || DET_B == 0 || DET_C == 0) {
  153   6                              uart_buf[0] = 0x80;
+C51 COMPILER V9.60.0.0   MAIN                                                              08/15/2020 17:11:20 PAGE 4   
+
 *** WARNING C196 IN LINE 153 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
-C51 COMPILER V9.60.0.0   MAIN                                                              08/12/2020 15:07:21 PAGE 4   
-
  154   6                              uart_buf[1] = (char *) uuid_bytes[0];
  155   6                              uart_buf[2] = (char *) uuid_bytes[1];
  156   6                              uart_buf[3] = (char *) uuid_bytes[2];
@@ -209,66 +211,56 @@ line level    source
  163   3      
  164   3                  //Set tile color (0x08)
  165   3                  if (receivedData[0] == 0x08) {
- 166   4                      if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
- 167   5                          uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 167 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+ 166   4                      if (receivedData[1] == 0xFF || (int*)receivedData[1] == short_id) {
+ 167   5                          LED_main(receivedData[2], receivedData[3], receivedData[4]);
+ 168   5                      }
+ 169   4                  }
+ 170   3      
+ 171   3                  //Call for unconfigured tiles (0x09)
+ 172   3                  if (receivedData[0] == 0x09) {
+ 173   4                      if (short_id == 0) {
+ 174   5                          uart_buf[0] = 0x80;
+*** WARNING C196 IN LINE 174 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
- 168   5                          uart_buf[1] = 0x08;
-*** WARNING C196 IN LINE 168 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+ 175   5                          uart_buf[1] = 0x09;
+*** WARNING C196 IN LINE 175 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
- 169   5                          uart_buf[2] = 0xA0;
-*** WARNING C196 IN LINE 169 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
+ 176   5                          uart_buf[2] = 0xA0;
+*** WARNING C196 IN LINE 176 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
              -valid
- 170   5                          LED_main(receivedData[2], receivedData[3], receivedData[4]);
- 171   5                          UART_Send (uart_buf);
- 172   5                      }
- 173   4                  }
- 174   3      
- 175   3                  //Call for unconfigured tiles (0x09)
- 176   3                  if (receivedData[0] == 0x09) {
- 177   4                      if (short_id == 0) {
- 178   5                          uart_buf[0] = 0x80;
-*** WARNING C196 IN LINE 178 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 179   5                          uart_buf[1] = 0x09;
-*** WARNING C196 IN LINE 179 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 180   5                          uart_buf[2] = 0xA0;
-*** WARNING C196 IN LINE 180 OF C:\Users\acvig\SimplicityStudio\v4_workspace\KineticTiles\src\main.c: mspace probably in
-             -valid
- 181   5                          UART_Send (uart_buf);
- 182   5                      }
- 183   4                  }
- 184   3      
- 185   3                  //Halt
- 186   3                  if (receivedData[0] == 0xFF) {
- 187   4                      //__asm MOV 0A7h,#0
- 188   4                      //__asm MOV 00,#0A5h
- 189   4                      //__asm MOV 0EFh,#010h
- 190   4                  }
- 191   3              i = 0;
- 192   3          } else {
- 193   3              i++;
- 194   3          }
- 195   2      }
- 196   1      }
+ 177   5                          UART_Send (uart_buf);
+ 178   5                      }
+ 179   4                  }
+ 180   3      
+ 181   3                  //Halt
+ 182   3                  if (receivedData[0] == 0xFF) {
+ 183   4                      //__asm MOV 0A7h,#0
+ 184   4                      //__asm MOV 00,#0A5h
+ 185   4                      //__asm MOV 0EFh,#010h
+ 186   4                  }
+ 187   3              i = 0;
+ 188   3          } else {
+ 189   3              i++;
+ 190   3          }
+ 191   2      }
+ 192   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1081    ----
-   CONSTANT SIZE    =     14    ----
-   XDATA SIZE       =   ----      73
-C51 COMPILER V9.60.0.0   MAIN                                                              08/12/2020 15:07:21 PAGE 5   
-
+   CODE SIZE        =   1045    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----      64
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----      15
+   DATA SIZE        =   ----      14
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
    FAR CONST SIZE   =   ----    ----
+C51 COMPILER V9.60.0.0   MAIN                                                              08/15/2020 17:11:20 PAGE 5   
+
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  18 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  16 WARNING(S),  0 ERROR(S)

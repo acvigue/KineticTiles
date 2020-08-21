@@ -44,7 +44,7 @@ void main(void) {
     uint8_t i = 0;
     unsigned long int *uuid_p;
     unsigned long int uuid;
-    char * short_id = 0;
+    int short_id = 0;
     char buf[2];
     int lastEdgeMask = 0;
     unsigned char xdata
@@ -54,7 +54,7 @@ void main(void) {
     char * xdata
     uuid_str[8], *pos = uuid_str;
     uint8_t xdata
-    receivedData[10] = {'\0'};
+    receivedData[         ] = {'\0'};
 
     uuid_p = 0xfc;
     uuid = *uuid_p;
@@ -110,7 +110,7 @@ void main(void) {
             if (receivedData[0] == 0x01) {
                 //Is this tile the intended recipient?
                 if (receivedData[2] == uuid_bytes[0] && receivedData[3] == uuid_bytes[1] && receivedData[4] == uuid_bytes[2]) {
-                    short_id = (char *) receivedData[6];
+                    short_id = (int *)receivedData[6];
                     uart_buf[0] = 0x80;
                     uart_buf[1] = 0x01;
                     uart_buf[2] = 0xA0;
@@ -163,12 +163,8 @@ void main(void) {
 
             //Set tile color (0x08)
             if (receivedData[0] == 0x08) {
-                if (receivedData[1] == 0xFF || receivedData[1] == short_id) {
-                    uart_buf[0] = 0x80;
-                    uart_buf[1] = 0x08;
-                    uart_buf[2] = 0xA0;
+                if (receivedData[1] == 0xFF || (int*)receivedData[1] == short_id) {
                     LED_main(receivedData[2], receivedData[3], receivedData[4]);
-                    UART_Send (uart_buf);
                 }
             }
 

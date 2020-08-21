@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   WS2812                                                            08/12/2020 15:07:21 PAGE 1   
+C51 COMPILER V9.60.0.0   WS2812                                                            08/15/2020 17:11:20 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE WS2812
@@ -26,11 +26,11 @@ line level    source
   11          //gamma correction function for more uniform colors.
   12          int gamma(uint8_t i) {
   13   1          return (int) (pow((float) i / (float) 255, 2.8) * 255 + 0.5);
-  14   1      }
-  15          
-  16          void LED__SendZero_(void) {
-  17   1          PIX = 1;
-  18   1          _nop_();
+  14   1          //return i;
+  15   1      }
+  16          
+  17          void LED__SendZero_(void) {
+  18   1          PIX = 1;
   19   1          _nop_();
   20   1          _nop_();
   21   1          _nop_();
@@ -38,14 +38,14 @@ line level    source
   23   1          _nop_();
   24   1          _nop_();
   25   1          _nop_();
-  26   1          PIX = 0;
-  27   1          _nop_();
+  26   1          _nop_();
+  27   1          PIX = 0;
   28   1          _nop_();
   29   1          _nop_();
   30   1          _nop_();
-  31   1      }
-  32          void LED__SendOne_(void) {
-  33   1          _nop_();
+  31   1          _nop_();
+  32   1      }
+  33          void LED__SendOne_(void) {
   34   1          _nop_();
   35   1          _nop_();
   36   1          _nop_();
@@ -60,90 +60,97 @@ line level    source
   45   1          _nop_();
   46   1          _nop_();
   47   1          _nop_();
-  48   1          PIX = 0;
-  49   1          //No NoOPs here because the if statement in SendByte takes 6-7 clock cycles (same as 6-7 NoOPs) +- 150
+  48   1          _nop_();
+  49   1          PIX = 0;
+  50   1          //No NoOPs here because the if statement in SendByte takes 6-7 clock cycles (same as 6-7 NoOPs) +- 150
+C51 COMPILER V9.60.0.0   WS2812                                                            08/15/2020 17:11:20 PAGE 2   
+
              -ms
-C51 COMPILER V9.60.0.0   WS2812                                                            08/12/2020 15:07:21 PAGE 2   
+  51   1          //Saleae doesn't see it as a valid ws2812 signal, but they still light up :/
+  52   1      }
+  53          void LED_Latch(void) {
+  54   1          short a = 10000;
+  55   1          PIX = 0;
+  56   1      //Each loop should produce 3 instructions: decrement, comparison, and jmp.
+  57   1      //At least 600 instructions are needed for 50us.
+  58   1          while (a--)
+  59   1              ;
+  60   1      }
+  61          void LED__SendByte_(unsigned char dat) {
+  62   1          if (dat & 0x80) {
+  63   2              PIX = 1;
+  64   2              LED__SendOne_();
+  65   2          } else
+  66   1              LED__SendZero_();
+  67   1          if (dat & 0x40) {
+  68   2              PIX = 1;
+  69   2              LED__SendOne_();
+  70   2          } else
+  71   1              LED__SendZero_();
+  72   1          if (dat & 0x20) {
+  73   2              PIX = 1;
+  74   2              LED__SendOne_();
+  75   2          } else
+  76   1              LED__SendZero_();
+  77   1          if (dat & 0x10) {
+  78   2              PIX = 1;
+  79   2              LED__SendOne_();
+  80   2          } else
+  81   1              LED__SendZero_();
+  82   1          if (dat & 0x08) {
+  83   2              PIX = 1;
+  84   2              LED__SendOne_();
+  85   2          } else
+  86   1              LED__SendZero_();
+  87   1          if (dat & 0x04) {
+  88   2              PIX = 1;
+  89   2              LED__SendOne_();
+  90   2          } else
+  91   1              LED__SendZero_();
+  92   1          if (dat & 0x02) {
+  93   2              PIX = 1;
+  94   2              LED__SendOne_();
+  95   2          } else
+  96   1              LED__SendZero_();
+  97   1          if (dat & 0x01) {
+  98   2              PIX = 1;
+  99   2              LED__SendOne_();
+ 100   2          } else
+ 101   1              LED__SendZero_();
+ 102   1      }
+ 103          
+ 104          void LED__SendPixel_(uint8_t g, uint8_t r, uint8_t b) {
+ 105   1          LED__SendByte_(r);
+ 106   1          LED__SendByte_(g);
+ 107   1          LED__SendByte_(b);
+ 108   1      }
+ 109          
+ 110          void LED_main(unsigned char g, unsigned char r, unsigned char b) {
+ 111   1          int i;
+ 112   1          uint8_t nr = gamma(r);
+C51 COMPILER V9.60.0.0   WS2812                                                            08/15/2020 17:11:20 PAGE 3   
 
-  50   1          //Saleae doesn't see it as a valid ws2812 signal, but they still light up :/
-  51   1      }
-  52          void LED_Latch(void) {
-  53   1          short a = 10000;
-  54   1          PIX = 0;
-  55   1      //Each loop should produce 3 instructions: decrement, comparison, and jmp.
-  56   1      //At least 600 instructions are needed for 50us.
-  57   1          while (a--)
-  58   1              ;
-  59   1      }
-  60          void LED__SendByte_(unsigned char dat) {
-  61   1          if (dat & 0x80) {
-  62   2              PIX = 1;
-  63   2              LED__SendOne_();
-  64   2          } else
-  65   1              LED__SendZero_();
-  66   1          if (dat & 0x40) {
-  67   2              PIX = 1;
-  68   2              LED__SendOne_();
-  69   2          } else
-  70   1              LED__SendZero_();
-  71   1          if (dat & 0x20) {
-  72   2              PIX = 1;
-  73   2              LED__SendOne_();
-  74   2          } else
-  75   1              LED__SendZero_();
-  76   1          if (dat & 0x10) {
-  77   2              PIX = 1;
-  78   2              LED__SendOne_();
-  79   2          } else
-  80   1              LED__SendZero_();
-  81   1          if (dat & 0x08) {
-  82   2              PIX = 1;
-  83   2              LED__SendOne_();
-  84   2          } else
-  85   1              LED__SendZero_();
-  86   1          if (dat & 0x04) {
-  87   2              PIX = 1;
-  88   2              LED__SendOne_();
-  89   2          } else
-  90   1              LED__SendZero_();
-  91   1          if (dat & 0x02) {
-  92   2              PIX = 1;
-  93   2              LED__SendOne_();
-  94   2          } else
-  95   1              LED__SendZero_();
-  96   1          if (dat & 0x01) {
-  97   2              PIX = 1;
-  98   2              LED__SendOne_();
-  99   2          } else
- 100   1              LED__SendZero_();
- 101   1      }
- 102          
- 103          void LED_main(unsigned char g, unsigned char r, unsigned char b) {
- 104   1          int i;
- 105   1          uint8_t nr = gamma(r);
- 106   1          uint8_t ng = gamma(g);
- 107   1          uint8_t nb = gamma(b);
- 108   1      
- 109   1          //Send, latch, and send again because first pixel might not light up on the first go round.
- 110   1          for (i = 0; i < 9; i++) {
- 111   2              LED__SendByte_(nr);
- 112   2              LED__SendByte_(ng);
-C51 COMPILER V9.60.0.0   WS2812                                                            08/12/2020 15:07:21 PAGE 3   
-
- 113   2              LED__SendByte_(nb);
- 114   2          }
- 115   1          LED_Latch();
- 116   1          for (i = 0; i < 9; i++) {
- 117   2              LED__SendByte_(nr);
- 118   2              LED__SendByte_(ng);
- 119   2              LED__SendByte_(nb);
- 120   2          }
- 121   1          LED_Latch();
- 122   1      }
+ 113   1          uint8_t ng = gamma(g);
+ 114   1          uint8_t nb = gamma(b);
+ 115   1      
+ 116   1          //Send, latch, and send again because first pixel might not light up on the first go round.
+ 117   1          for (i = 0; i < 9; i++) {
+ 118   2              LED__SendByte_(nr);
+ 119   2              LED__SendByte_(ng);
+ 120   2              LED__SendByte_(nb);
+ 121   2          }
+ 122   1          LED_Latch();
+ 123   1          for (i = 0; i < 9; i++) {
+ 124   2              LED__SendByte_(nr);
+ 125   2              LED__SendByte_(ng);
+ 126   2              LED__SendByte_(nb);
+ 127   2          }
+ 128   1          LED_Latch();
+ 129   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    294    ----
+   CODE SIZE        =    313    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
