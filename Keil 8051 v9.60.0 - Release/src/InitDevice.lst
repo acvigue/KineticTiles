@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/15/2020 17:11:19 PAGE 1   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/30/2020 15:29:11 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE INITDEVICE
@@ -63,7 +63,7 @@ line level    source
   48   1           - P0.5 output is open-drain
   49   1           - P0.6 output is open-drain
   50   1           - P0.7 output is open-drain
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/15/2020 17:11:19 PAGE 2   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/30/2020 15:29:11 PAGE 2   
 
   51   1           ***********************************************************************/
   52   1          P0MDOUT = P0MDOUT_B0__OPEN_DRAIN | P0MDOUT_B1__OPEN_DRAIN | P0MDOUT_B2__OPEN_DRAIN | P0MDOUT_B3__OPEN_
@@ -128,7 +128,7 @@ line level    source
  108   1           - P1.3 pin is not skipped by the crossbar
  109   1           - P1.4 pin is not skipped by the crossbar
  110   1           - P1.5 pin is skipped by the crossbar
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/15/2020 17:11:19 PAGE 3   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/30/2020 15:29:11 PAGE 3   
 
  111   1           - P1.6 pin is not skipped by the crossbar
  112   1           ***********************************************************************/
@@ -193,7 +193,7 @@ line level    source
  169   1          for (i = 0; i < (2 * 3062500UL) / (10000 * 3); i++) {
  170   2              NOP();
  171   2          }
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/15/2020 17:11:19 PAGE 4   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/30/2020 15:29:11 PAGE 4   
 
  172   1      
  173   1          // Disable WDT
@@ -258,7 +258,7 @@ line level    source
  230   1           - Start Timer 1 running
  231   1           ***********************************************************************/
  232   1          TCON |= TCON_TR1__RUN;
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/15/2020 17:11:19 PAGE 5   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/30/2020 15:29:11 PAGE 5   
 
  233   1          // [TCON - Timer 0/1 Control]$
  234   1      
@@ -323,7 +323,7 @@ line level    source
  293   1          TCON |= (TCON_save & TCON_TR0__BMASK) | (TCON_save & TCON_TR1__BMASK);
  294   1      
  295   1          // [Timer Restoration]$
-C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/15/2020 17:11:19 PAGE 6   
+C51 COMPILER V9.60.0.0   INITDEVICE                                                        08/30/2020 15:29:11 PAGE 6   
 
  296   1      
  297   1      }
